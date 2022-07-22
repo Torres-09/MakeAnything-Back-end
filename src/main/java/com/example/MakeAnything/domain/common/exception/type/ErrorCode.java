@@ -1,4 +1,4 @@
-package com.rms.drifeserver.domain.common.exception.type;
+package com.example.MakeAnything.domain.common.exception.type;
 
 import lombok.Getter;
 

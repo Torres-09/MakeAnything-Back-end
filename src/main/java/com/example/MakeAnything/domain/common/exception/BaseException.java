@@ -1,6 +1,6 @@
-package com.rms.drifeserver.domain.common.exception;
+package com.example.MakeAnything.domain.common.exception;
 
-import com.rms.drifeserver.domain.common.exception.type.ErrorCode;
+import com.example.MakeAnything.domain.common.exception.type.ErrorCode;
 import lombok.Getter;
 
 @Getter
