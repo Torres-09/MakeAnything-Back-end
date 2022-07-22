@@ -1,5 +1,7 @@
-package com.example.MakeAnything.common;
+package com.example.MakeAnything.domain.common;
 
+import com.example.MakeAnything.domain.common.exception.model.ErrorDTO;
+import com.example.MakeAnything.domain.common.exception.type.ErrorCode;
 import lombok.*;
 
 @ToString

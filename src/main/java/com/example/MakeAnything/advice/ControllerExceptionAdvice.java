@@ -1,15 +1,14 @@
-package com.rms.drifeserver.advice;
+package com.example.MakeAnything.advice;
 
+import com.example.MakeAnything.domain.common.ApiResponse;
+import com.example.MakeAnything.domain.common.exception.BaseException;
+import com.example.MakeAnything.domain.common.exception.type.ErrorCode;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
-import com.rms.drifeserver.domain.common.dto.ApiResponse;
-import com.rms.drifeserver.domain.common.exception.BaseException;
-import com.rms.drifeserver.domain.common.exception.type.ErrorCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindException;
 import org.springframework.web.HttpMediaTypeException;
 import org.springframework.web.HttpMediaTypeNotAcceptableException;
@@ -24,7 +23,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
 
-import static com.rms.drifeserver.domain.common.exception.type.ErrorCode.*;
+import static com.example.MakeAnything.domain.common.exception.type.ErrorCode.*;
 import static java.util.stream.Collectors.joining;
 
 @Slf4j
