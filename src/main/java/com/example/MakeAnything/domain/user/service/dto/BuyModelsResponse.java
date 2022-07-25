@@ -2,7 +2,6 @@ package com.example.MakeAnything.domain.user.service.dto;
 
 import com.example.MakeAnything.domain.model.model.Model;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -10,7 +9,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class ModelResponse {
+public class BuyModelsResponse {
 
     private Long modelId;
 
@@ -26,7 +25,7 @@ public class ModelResponse {
 
     private LocalDateTime paidAt;
 
-    private ModelResponse(Long modelId, String modelName, Long userId, String userName, Long downloadCount, Long price, LocalDateTime paidAt) {
+    private BuyModelsResponse(Long modelId, String modelName, Long userId, String userName, Long downloadCount, Long price, LocalDateTime paidAt) {
         this.modelId = modelId;
         this.modelName = modelName;
         this.userId = userId;
@@ -36,9 +35,9 @@ public class ModelResponse {
         this.paidAt = paidAt;
     }
 
-    public static ModelResponse of(Model model, Long downloadCount) {
+    public static BuyModelsResponse of(Model model, Long downloadCount) {
 
-        return new ModelResponse(model.getId(), model.getModelName(), model.getUser_id(), "", downloadCount,
-                model.getPrice(), LocalDateTime.now());
+        return new BuyModelsResponse(model.getId(), model.getModelName(), model.getUser().getId(), model.getUser().getUserName(),
+                downloadCount, model.getPrice(), LocalDateTime.now());
     }
 }

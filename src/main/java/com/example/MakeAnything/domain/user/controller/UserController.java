@@ -2,7 +2,10 @@ package com.example.MakeAnything.domain.user.controller;
 
 import com.example.MakeAnything.domain.common.ApiResponse;
 import com.example.MakeAnything.domain.user.service.UserService;
-import com.example.MakeAnything.domain.user.service.dto.ModelResponse;
+import com.example.MakeAnything.domain.user.service.dto.BuyModelsResponse;
+import com.example.MakeAnything.domain.user.service.dto.SellModelsResponse;
+import com.example.MakeAnything.domain.wishlist.service.WishlistService;
+import com.example.MakeAnything.domain.user.service.dto.WishModelsResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,20 +17,20 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserController {
 
-    private UserService userService;
+    private final UserService userService;
 
     @GetMapping("/users/{userId}/sell")
-    public ApiResponse<List<ModelResponse>> getSellModels(@PathVariable Long userId) {
-        return ApiResponse.success(userService.getWishModels(userId));
+    public ApiResponse<List<SellModelsResponse>> getSellModels(@PathVariable Long userId) {
+        return ApiResponse.success(userService.getSellModels(userId));
     }
 
     @GetMapping("/users/{userId}/buy")
-    public ApiResponse<List<ModelResponse>> getBuyModels(@PathVariable Long userId) {
-        return ApiResponse.success(userService.getWishModels(userId));
+    public ApiResponse<List<BuyModelsResponse>> getBuyModels(@PathVariable Long userId) {
+        return ApiResponse.success(userService.getBuyModels(userId));
     }
 
     @GetMapping("/users/{userId}/wish")
-    public ApiResponse<List<ModelResponse>> getWishModels(@PathVariable Long userId) {
+    public ApiResponse<List<WishModelsResponse>> getWishModels(@PathVariable Long userId) {
         return ApiResponse.success(userService.getWishModels(userId));
     }
 
