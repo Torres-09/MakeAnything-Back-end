@@ -1,14 +1,12 @@
 package com.example.MakeAnything.domain.model.model;
 
 import com.example.MakeAnything.domain.common.BaseTimeEntity;
+import com.example.MakeAnything.domain.user.model.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Setter
@@ -21,6 +19,11 @@ public class Model extends BaseTimeEntity {
     private Long id;
 
     private Long user_id;
+
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     private Long category_id;
 
     private String modelName;
