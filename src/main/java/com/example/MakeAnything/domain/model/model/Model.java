@@ -21,10 +21,10 @@ public class Model extends BaseTimeEntity {
     private Long user_id;
 
     @OneToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "userId")
     private User user;
 
-    private Long category_id;
+    private Long categoryId;
 
     private String modelName;
 
