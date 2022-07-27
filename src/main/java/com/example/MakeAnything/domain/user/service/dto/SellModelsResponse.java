@@ -1,14 +1,14 @@
 package com.example.MakeAnything.domain.user.service.dto;
 
 import com.example.MakeAnything.domain.model.model.Model;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
+@ToString
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class SellModelsResponse {
 
     private Long modelId;
@@ -24,16 +24,6 @@ public class SellModelsResponse {
     private Long price;
 
     private LocalDateTime paidAt;
-
-    private SellModelsResponse(Long modelId, String modelName, Long userId, String userName, Long downloadCount, Long price, LocalDateTime paidAt) {
-        this.modelId = modelId;
-        this.modelName = modelName;
-        this.userId = userId;
-        this.userName = userName;
-        this.downloadCount = downloadCount;
-        this.price = price;
-        this.paidAt = paidAt;
-    }
 
     public static SellModelsResponse of(Model model, Long downloadCount) {
 
