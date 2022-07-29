@@ -4,6 +4,7 @@ import com.example.MakeAnything.domain.auth.service.AuthServiceFinder;
 import com.example.MakeAnything.domain.auth.service.LocalAuthService;
 import com.example.MakeAnything.domain.auth.service.dto.LoginLocalRequest;
 import com.example.MakeAnything.domain.auth.service.dto.LoginResponse;
+import com.example.MakeAnything.domain.auth.service.dto.RefreshTokenRequest;
 import com.example.MakeAnything.domain.auth.service.dto.SignUpLocalRequest;
 import com.example.MakeAnything.domain.common.ApiResponse;
 import lombok.RequiredArgsConstructor;
@@ -32,5 +33,9 @@ public class AuthController {
         return ApiResponse.success(localAuthService.signUp(request));
     }
 
+    @PostMapping("/refresh/token")
+    public ApiResponse<LoginResponse> refreshAccessToken(@RequestBody RefreshTokenRequest request) {
+        return ApiResponse.success(localAuthService.refreshAccessToken(request));
+    }
 
 }
