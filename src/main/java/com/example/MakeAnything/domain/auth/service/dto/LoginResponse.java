@@ -8,11 +8,13 @@ import lombok.*;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class LoginResponse {
 
-    private String token;
-
     private Long userId;
 
-    public static LoginResponse of(String token, Long userId) {
-        return new LoginResponse(token, userId);
+    private String accessToken;
+
+    private String refreshToken;
+
+    public static LoginResponse of(Long userId, String accessToken, String refreshToken) {
+        return new LoginResponse(userId, accessToken, refreshToken);
     }
 }

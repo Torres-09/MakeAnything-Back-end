@@ -19,6 +19,7 @@ public enum ErrorCode {
 
     // 401 UnAuthorized
     UNAUTHORIZED("UA000", "세션이 만료되었습니다. 다시 로그인 해주세요"),
+    FAIL_TO_LOGIN("UA001", "없는 아이디거나 비밀번호가 틀렸습니다."),
 
 
     // 403 Forbidden
