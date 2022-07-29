@@ -1,10 +1,13 @@
 package com.example.MakeAnything.utils;
 
+import com.example.MakeAnything.domain.common.exception.BaseException;
+import com.example.MakeAnything.domain.common.exception.type.ErrorCode;
+import lombok.NoArgsConstructor;
+
 import java.security.MessageDigest;
 
+@NoArgsConstructor
 public class SHA256 {
-    public SHA256() {
-    }
 
     public static String encrypt(String planText) {
         try {
@@ -31,7 +34,7 @@ public class SHA256 {
             return hexString.toString();
         } catch (Exception var7) {
             var7.printStackTrace();
-            throw new RuntimeException();
+            throw new BaseException(ErrorCode.BAD_GATEWAY);
         }
     }
 }

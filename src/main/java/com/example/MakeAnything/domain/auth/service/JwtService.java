@@ -18,12 +18,12 @@ public class JwtService {
 
     private final String SECRET_KEY = "test";
 
-    public String createJwt(int userIdx){
+    public String createJwt(Long userId){
         Date now = new Date();
 
         return Jwts.builder()
                 .setHeaderParam("type","jwt")
-                .claim("userId",userIdx)
+                .claim("userId",userId)
                 .setIssuedAt(now)
                 .setExpiration(new Date(System.currentTimeMillis()+1000*60*60*24))
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
