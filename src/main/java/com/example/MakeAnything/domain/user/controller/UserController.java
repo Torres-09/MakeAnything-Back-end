@@ -4,7 +4,6 @@ import com.example.MakeAnything.domain.common.ApiResponse;
 import com.example.MakeAnything.domain.user.service.UserService;
 import com.example.MakeAnything.domain.user.service.dto.BuyModelsResponse;
 import com.example.MakeAnything.domain.user.service.dto.SellModelsResponse;
-import com.example.MakeAnything.domain.wishlist.service.WishlistService;
 import com.example.MakeAnything.domain.user.service.dto.WishModelsResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

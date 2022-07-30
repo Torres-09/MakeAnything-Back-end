@@ -1,6 +1,7 @@
 package com.example.MakeAnything.domain.user.service.dto;
 
 import com.example.MakeAnything.domain.model.model.Model;
+import com.example.MakeAnything.domain.user.model.User;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -9,7 +10,7 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class SellModelsResponse {
+public class WishModelsResponse {
 
     private Long modelId;
 
@@ -23,11 +24,11 @@ public class SellModelsResponse {
 
     private Long price;
 
-    private LocalDateTime paidAt;
+    private LocalDateTime createdAt;
 
-    public static SellModelsResponse of(Model model, Long downloadCount) {
+    public static WishModelsResponse of(Model model, User user, Long downloadCount) {
 
-        return new SellModelsResponse(model.getId(), model.getModelName(), model.getUser().getId(), model.getUser().getUserName(),
-                downloadCount, model.getPrice(), LocalDateTime.now());
+        return new WishModelsResponse(model.getId(), model.getModelName(), user.getId(), user.getUserName(),
+                downloadCount, model.getPrice(), model.getCreatedAt());
     }
 }
