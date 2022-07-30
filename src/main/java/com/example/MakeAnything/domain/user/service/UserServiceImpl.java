@@ -5,10 +5,12 @@ import com.example.MakeAnything.domain.user.service.dto.SellModelsResponse;
 import com.example.MakeAnything.domain.user.service.dto.WishModelsResponse;
 import com.example.MakeAnything.domain.wishlist.repository.WishlistRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 

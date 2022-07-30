@@ -9,7 +9,9 @@ import com.example.MakeAnything.domain.user.repository.UserRepository;
 import com.example.MakeAnything.domain.wishlist.model.Wishlist;
 import com.example.MakeAnything.domain.wishlist.repository.WishlistRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
+@Service
 @RequiredArgsConstructor
 public class WishlistServiceImpl implements WishlistService {
 
