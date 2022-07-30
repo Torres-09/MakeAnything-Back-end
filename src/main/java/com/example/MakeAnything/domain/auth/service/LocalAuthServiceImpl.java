@@ -4,6 +4,7 @@ import com.example.MakeAnything.domain.auth.model.RefreshToken;
 import com.example.MakeAnything.domain.auth.repository.RefreshTokenRepository;
 import com.example.MakeAnything.domain.auth.service.dto.LoginLocalRequest;
 import com.example.MakeAnything.domain.auth.service.dto.LoginResponse;
+import com.example.MakeAnything.domain.auth.service.dto.RefreshTokenRequest;
 import com.example.MakeAnything.domain.auth.service.dto.SignUpLocalRequest;
 import com.example.MakeAnything.domain.common.exception.BaseException;
 import com.example.MakeAnything.domain.common.exception.type.ErrorCode;
@@ -11,7 +12,9 @@ import com.example.MakeAnything.domain.user.model.User;
 import com.example.MakeAnything.domain.user.repository.UserRepository;
 import com.example.MakeAnything.utils.SHA256;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
+@Service
 @RequiredArgsConstructor
 public class LocalAuthServiceImpl implements LocalAuthService{
 
@@ -55,5 +58,21 @@ public class LocalAuthServiceImpl implements LocalAuthService{
         refreshTokenRepository.save(RefreshToken.of(user.getId(), refreshToken));
 
         return LoginResponse.of(user.getId(), accessToken, refreshToken);
+    }
+
+    @Override
+    public LoginResponse refreshAccessToken(RefreshTokenRequest request) {
+
+        jwtService.validateRefreshToken(request.getRefreshToken());
+
+        RefreshToken refreshToken = refreshTokenRepository.findByToken(request.getRefreshToken())
+                .orElseThrow(() -> new BaseException(ErrorCode.INVALID_AUTH_TOKEN));
+
+        User user = userRepository.findById(refreshToken.getUserId())
+                .orElseThrow(() -> new BaseException(ErrorCode.NOTFOUND_USER));
+
+        String accessToken = jwtService.createJwt(user.getId());
+
+        return LoginResponse.of(user.getId(), accessToken, request.getRefreshToken());
     }
 }
