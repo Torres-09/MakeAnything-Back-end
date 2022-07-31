@@ -1,5 +1,6 @@
 package com.example.MakeAnything.domain.model.model;
 
+import com.example.MakeAnything.domain.category.model.Category;
 import com.example.MakeAnything.domain.common.BaseTimeEntity;
 import com.example.MakeAnything.domain.user.model.User;
 import lombok.Getter;
@@ -23,7 +24,9 @@ public class Model extends BaseTimeEntity {
     @JoinColumn(name = "userId")
     private User user;
 
-    private Long categoryId;
+    @OneToOne(fetch = FetchType.LAZY)
+    private Category category;
+    @JoinColumn(name = "categoryId")
 
     private String modelName;
 
