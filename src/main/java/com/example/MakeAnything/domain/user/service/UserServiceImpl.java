@@ -1,5 +1,6 @@
 package com.example.MakeAnything.domain.user.service;
 
+import com.example.MakeAnything.domain.model.repository.ModelRepository;
 import com.example.MakeAnything.domain.user.service.dto.BuyModelsResponse;
 import com.example.MakeAnything.domain.user.service.dto.SellModelsResponse;
 import com.example.MakeAnything.domain.user.service.dto.WishModelsResponse;
@@ -16,9 +17,13 @@ public class UserServiceImpl implements UserService {
 
     private final WishlistRepository wishlistRepository;
 
+    private final ModelRepository modelRepository;
+
     @Override
     public List<SellModelsResponse> getSellModels(Long userId) {
-        return null;
+        return modelRepository.findAllByUserId(userId).stream()
+                .map(model -> SellModelsResponse.of(model, 0L))
+                .collect(Collectors.toList());
     }
 
     @Override
