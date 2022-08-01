@@ -11,6 +11,6 @@ public interface LocalAuthService {
 
     LoginResponse signUp(SignUpLocalRequest request);
 
-    LoginResponse refreshAccessToken(RefreshTokenRequest request);
+
 
 }

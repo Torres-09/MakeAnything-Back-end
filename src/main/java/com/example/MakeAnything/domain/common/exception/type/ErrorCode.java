@@ -33,6 +33,7 @@ public enum ErrorCode {
     NOTFOUND_REVIEW("NF003", "삭제되거나 존재하지 않는 리뷰입니다"),
     NOTFOUND_BOARD("NF004", "삭제되거나 존재하지 않는 게시글입니다"),
     NOTFOUND_COMMENT("NF005", "삭제되거나 존재하지 않는 댓글입니다"),
+    NOTFOUND_REFRESH_TOKEN( "NF006", "삭제되거나 존재하지 않는 리프레시토큰입니다"),
 
 
     // 405 Method Not Allowed
