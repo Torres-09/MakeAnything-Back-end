@@ -23,11 +23,11 @@ public class SellModelsResponse {
 
     private Long price;
 
-    private LocalDateTime paidAt;
+    private LocalDateTime createdAt;
 
     public static SellModelsResponse of(Model model, Long downloadCount) {
 
         return new SellModelsResponse(model.getId(), model.getModelName(), model.getUser().getId(), model.getUser().getUserName(),
-                downloadCount, model.getPrice(), LocalDateTime.now());
+                downloadCount, model.getPrice(), model.getCreatedAt());
     }
 }
