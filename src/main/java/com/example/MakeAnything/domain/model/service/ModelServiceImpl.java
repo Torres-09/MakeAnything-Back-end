@@ -1,6 +1,7 @@
 package com.example.MakeAnything.domain.model.service;
 
 import com.example.MakeAnything.domain.model.repository.ModelRepository;
+import com.example.MakeAnything.domain.model.service.dto.CreateModelResponse;
 import com.example.MakeAnything.domain.model.service.dto.GetAllModelsResponse;
 import lombok.RequiredArgsConstructor;
 
@@ -13,6 +14,11 @@ public class ModelServiceImpl implements ModelService{
 
     @Override
     public List<GetAllModelsResponse> getAllModels(){
+        return null;
+    }
+
+    @Override
+    public CreateModelResponse createModel() {
         return null;
     }
 }
