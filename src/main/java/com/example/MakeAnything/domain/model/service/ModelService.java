@@ -1,5 +1,6 @@
 package com.example.MakeAnything.domain.model.service;
 
+import com.example.MakeAnything.domain.model.service.dto.CreateModelResponse;
 import com.example.MakeAnything.domain.model.service.dto.GetAllModelsResponse;
 import org.springframework.stereotype.Service;
 
@@ -9,4 +10,6 @@ import java.util.List;
 public interface ModelService {
 
     List<GetAllModelsResponse> getAllModels();
+
+    CreateModelResponse createModel();
 }
