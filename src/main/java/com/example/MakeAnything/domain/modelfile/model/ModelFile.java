@@ -10,23 +10,25 @@ import javax.persistence.*;
 
 @Entity
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ModelFile {
     @Id
-    @GeneratedValue
-    @Column(name = "modelFileId")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String originalFileName;
 
-    private String modelFileUrl;
+    private String fileFullPath;
 
     @OneToOne
     @JoinColumn(name = "modelId")
     private Model model;
 
-    @Builder(access = AccessLevel.PRIVATE)
-    public ModelFile(String modelFileUrl, Model model) {
-        this.modelFileUrl = modelFileUrl;
+
+    @Builder
+    public ModelFile(String originalFileName, String fileFullPath,Model model) {
+        this.originalFileName = originalFileName;
+        this.fileFullPath = fileFullPath;
         this.model = model;
     }
 }

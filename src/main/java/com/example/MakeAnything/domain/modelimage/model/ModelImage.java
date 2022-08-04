@@ -14,8 +14,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ModelImage {
     @Id
-    @GeneratedValue
-    @Column(name = "modelImageId")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String modelImageUrl;
@@ -24,7 +23,7 @@ public class ModelImage {
     @JoinColumn(name = "modelId")
     private Model model;
 
-    @Builder(access = AccessLevel.PRIVATE)
+    @Builder
     public ModelImage(String modelImageUrl, Model model) {
         this.modelImageUrl = modelImageUrl;
         this.model = model;

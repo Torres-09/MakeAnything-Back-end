@@ -13,8 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class ModelTag {
     @Id
-    @GeneratedValue
-    @Column(name = "modelTagId")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
