@@ -2,10 +2,12 @@ package com.example.MakeAnything.domain.model.service;
 
 import com.example.MakeAnything.domain.model.model.Model;
 import com.example.MakeAnything.domain.model.repository.ModelRepository;
+import com.example.MakeAnything.domain.model.service.dto.CreateModelRequest;
 import com.example.MakeAnything.domain.model.service.dto.CreateModelResponse;
 import com.example.MakeAnything.domain.model.service.dto.GetAllModelsResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -25,8 +27,10 @@ public class ModelServiceImpl implements ModelService{
         return null;
     }
 
+    // 모델 생성
     @Override
-    public Long save(Model model) {
-        return modelRepository.save(model).getId();
+    @Transactional
+    public Long save(CreateModelRequest modelRequest) {
+        return modelRepository.save(modelRequest.toEntity()).getId();
     }
 }

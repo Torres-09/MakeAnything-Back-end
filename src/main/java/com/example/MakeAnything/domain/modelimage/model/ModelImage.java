@@ -17,15 +17,17 @@ public class ModelImage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String modelImageUrl;
+    private String originalImageName;
 
+    private String imageFullPath;
     @ManyToOne
     @JoinColumn(name = "modelId")
     private Model model;
 
     @Builder
-    public ModelImage(String modelImageUrl, Model model) {
-        this.modelImageUrl = modelImageUrl;
+    public ModelImage(String originalImageName, String imageFullPath, Model model) {
+        this.originalImageName = originalImageName;
+        this.imageFullPath = imageFullPath;
         this.model = model;
     }
 }
