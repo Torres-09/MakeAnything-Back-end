@@ -45,7 +45,7 @@ public class Model extends BaseTimeEntity {
     @OneToMany(mappedBy = "model")
     private List<ModelTag> modelTags;
 
-    @Builder(access = AccessLevel.PROTECTED)
+    @Builder
     public Model(User user, Category category, String modelName, Long price, String content, ModelFile modelFile, List<ModelImage> modelImages, List<ModelTag> modelTags) {
         this.user = user;
         this.category = category;
