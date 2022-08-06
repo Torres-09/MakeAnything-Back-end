@@ -20,15 +20,18 @@ public class ModelFile {
 
     private String fileFullPath;
 
+    private Long fileSize;
+
     @OneToOne
     @JoinColumn(name = "modelId")
     private Model model;
 
 
     @Builder
-    public ModelFile(String originalFileName, String fileFullPath,Model model) {
+    public ModelFile(String originalFileName, String fileFullPath, Long fileSize, Model model) {
         this.originalFileName = originalFileName;
         this.fileFullPath = fileFullPath;
+        this.fileSize = fileSize;
         this.model = model;
     }
 }

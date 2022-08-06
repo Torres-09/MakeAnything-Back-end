@@ -13,8 +13,6 @@ public interface ModelService {
 
     List<GetAllModelsResponse> getAllModels();
 
-    CreateModelResponse createModel();
-
     // 모델 생성
-    Long save(CreateModelRequest createModelRequest);
+    CreateModelResponse createModel(CreateModelRequest createModelRequest);
 }

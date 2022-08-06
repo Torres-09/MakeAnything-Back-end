@@ -25,7 +25,7 @@ public class ModelController {
     @ResponseBody
     @PostMapping("")
     public ApiResponse<CreateModelResponse> createModel(@RequestBody CreateModelRequest createModelRequest) {
-        return null;
+        return ApiResponse.success(modelService.createModel(createModelRequest));
     }
 
     // 모델을 카테고리로 조회
