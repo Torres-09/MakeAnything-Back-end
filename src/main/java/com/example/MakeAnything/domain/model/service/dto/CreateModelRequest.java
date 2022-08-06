@@ -19,7 +19,6 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 public class CreateModelRequest {
-
     private String modelName;
     private Long price;
     private String content;
