@@ -8,9 +8,17 @@ import lombok.ToString;
 @ToString
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class LoginSocialRequest {
+public class SignUpSocialRequest {
 
     private String token;
 
     private String socialType;
+
+    private String userName;
+
+    private String nickName;
+
+    private String phoneNumber;
+
+    private String address;
 }
