@@ -1,13 +1,7 @@
 package com.example.MakeAnything.domain.auth.controller;
 
-import com.example.MakeAnything.domain.auth.service.AuthServiceFinder;
-import com.example.MakeAnything.domain.auth.service.JwtService;
-import com.example.MakeAnything.domain.auth.service.LocalAuthService;
-import com.example.MakeAnything.domain.auth.service.RefreshTokenService;
-import com.example.MakeAnything.domain.auth.service.dto.LoginLocalRequest;
-import com.example.MakeAnything.domain.auth.service.dto.LoginResponse;
-import com.example.MakeAnything.domain.auth.service.dto.RefreshTokenRequest;
-import com.example.MakeAnything.domain.auth.service.dto.SignUpLocalRequest;
+import com.example.MakeAnything.domain.auth.service.*;
+import com.example.MakeAnything.domain.auth.service.dto.*;
 import com.example.MakeAnything.domain.common.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,6 +30,22 @@ public class AuthController {
     public ApiResponse<LoginResponse> signUpLocal(@RequestBody SignUpLocalRequest request) {
 
         return ApiResponse.success(localAuthService.signUp(request));
+    }
+
+    @PostMapping("/auth/login/social")
+    public ApiResponse<LoginResponse> loginSocial(@RequestBody LoginSocialRequest request) {
+
+        SocialAuthService socialAuthService = authServiceFinder.getAuthService(request.getSocialType());
+
+        return ApiResponse.success(socialAuthService.login(request));
+    }
+
+    @PostMapping("/auth/signup/social")
+    public ApiResponse<LoginResponse> signUpSocial(@RequestBody SignUpSocialRequest request) {
+
+        SocialAuthService socialAuthService = authServiceFinder.getAuthService(request.getSocialType());
+
+        return ApiResponse.success(socialAuthService.signUp(request));
     }
 
     @PostMapping("/refresh/token")
