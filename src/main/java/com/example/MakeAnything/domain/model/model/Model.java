@@ -19,7 +19,6 @@ public class Model extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "modelId")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -55,5 +54,12 @@ public class Model extends BaseTimeEntity {
         this.modelFile = modelFile;
         this.modelImages = modelImages;
         this.modelTags = modelTags;
+    }
+
+    // 수정
+    public void update(String modelName, Long price, String content) {
+        this.modelName = modelName;
+        this.price = price;
+        this.content = content;
     }
 }
