@@ -20,14 +20,17 @@ public class ModelImage {
     private String originalImageName;
 
     private String imageFullPath;
+
+    private Long imageSize;
     @ManyToOne
     @JoinColumn(name = "modelId")
     private Model model;
 
     @Builder
-    public ModelImage(String originalImageName, String imageFullPath, Model model) {
+    public ModelImage(String originalImageName, String imageFullPath, Long imageSize, Model model) {
         this.originalImageName = originalImageName;
         this.imageFullPath = imageFullPath;
+        this.imageSize = imageSize;
         this.model = model;
     }
 }

@@ -17,20 +17,23 @@ public class ModelServiceImpl implements ModelService{
 
     private final ModelRepository modelRepository;
 
+    // 모델 조회
     @Override
     public List<GetAllModelsResponse> getAllModels(){
-        return null;
-    }
-
-    @Override
-    public CreateModelResponse createModel() {
         return null;
     }
 
     // 모델 생성
     @Override
     @Transactional
-    public Long save(CreateModelRequest modelRequest) {
-        return modelRepository.save(modelRequest.toEntity()).getId();
+    public CreateModelResponse createModel(CreateModelRequest createModelRequest) {
+        Model model = createModelRequest.toEntity();
+        modelRepository.save(model);
+
+        return CreateModelResponse.builder()
+                .success(true)
+                .model(model)
+                .error(null)
+                .build();
     }
 }
