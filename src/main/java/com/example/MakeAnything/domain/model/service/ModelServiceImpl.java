@@ -17,17 +17,35 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class ModelServiceImpl implements ModelService{
+public class ModelServiceImpl implements ModelService {
 
     private final ModelRepository modelRepository;
 
     // 모델 조회
     @Override
     @Transactional(readOnly = true)
-    public List<GetAllModelsResponse> getAllModels(){
+    public List<GetAllModelsResponse> getAllModels() {
         return modelRepository.findAll().stream()
                 .filter(model -> model.getDeletedAt() == null)
-                .map(model -> GetAllModelsResponse.of(model,0L))
+                .map(model -> GetAllModelsResponse.of(model, 0L))
+                .collect(Collectors.toList());
+    }
+
+    // 모델 상세조회
+    @Override
+    @Transactional(readOnly = true)
+    public GetModelResponse getModel(Long modelId) {
+        Model model = modelRepository.findModelById(modelId);
+        GetModelResponse getModelResponse = GetModelResponse.of(model, 0L);
+        return getModelResponse;
+    }
+
+    // 카테고리 이름으로 모델 조회
+    @Override
+    @Transactional(readOnly = true)
+    public List<GetModelByCategoryResponse> getModelsByCategory(Long categoryId) {
+        return modelRepository.findModelsByCategory(categoryId).stream()
+                .map(model -> GetModelByCategoryResponse.of(model, 0L))
                 .collect(Collectors.toList());
     }
 
@@ -49,8 +67,7 @@ public class ModelServiceImpl implements ModelService{
     public UpdateModelResponse updateModel(Long modelId, UpdateModelRequest updateModelRequest) {
         Optional<Model> optionalModel = modelRepository.findById(modelId);
 
-        if(optionalModel.isPresent())
-        {
+        if (optionalModel.isPresent()) {
             Model model = optionalModel.get();
 
             model.updateModel(updateModelRequest.getModelName(),
@@ -60,9 +77,7 @@ public class ModelServiceImpl implements ModelService{
             return UpdateModelResponse.builder()
                     .resultMessage("success")
                     .build();
-        }
-        else
-        {
+        } else {
             return UpdateModelResponse.builder()
                     .resultMessage("fail")
                     .build();
@@ -75,20 +90,28 @@ public class ModelServiceImpl implements ModelService{
     public DeleteModelResponse deleteModel(Long modelId) {
         Optional<Model> optionalModel = modelRepository.findById(modelId);
 
-        if(optionalModel.isPresent())
-        {
+        if (optionalModel.isPresent()) {
             Model model = optionalModel.get();
             model.deleteModel();
 
             return DeleteModelResponse.builder()
                     .resultMessage("success")
                     .build();
-        }
-        else
-        {
+        } else {
             return DeleteModelResponse.builder()
                     .resultMessage("fail")
                     .build();
         }
     }
+
+    // 이름으로 모델 검색
+    @Transactional(readOnly = true)
+    @Override
+    public List<GetModelByNameResponse> getModelByName(GetModelByNameRequest getModelByNameRequest) {
+        return modelRepository.findModelsByModelName(getModelByNameRequest.getModelName()).stream()
+                .map(model -> GetModelByNameResponse.of(model, 0L))
+                .collect(Collectors.toList());
+    }
+
+    // 상위 모델 조회
 }

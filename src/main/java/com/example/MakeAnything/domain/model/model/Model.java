@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Setter
 @Getter
 @NoArgsConstructor
 public class Model extends BaseTimeEntity {
@@ -26,7 +25,7 @@ public class Model extends BaseTimeEntity {
     @JoinColumn(name = "userId")
     private User user;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "categoryId")
     private Category category;
 
