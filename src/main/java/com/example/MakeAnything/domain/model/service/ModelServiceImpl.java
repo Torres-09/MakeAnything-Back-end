@@ -26,6 +26,7 @@ public class ModelServiceImpl implements ModelService{
     @Transactional(readOnly = true)
     public List<GetAllModelsResponse> getAllModels(){
         return modelRepository.findAll().stream()
+                .filter(model -> model.getDeletedAt() == null)
                 .map(model -> GetAllModelsResponse.of(model,0L))
                 .collect(Collectors.toList());
     }
@@ -38,9 +39,7 @@ public class ModelServiceImpl implements ModelService{
         modelRepository.save(model);
 
         return CreateModelResponse.builder()
-                .success(true)
-                .data("success")
-                .error(null)
+                .resultMessage("success")
                 .build();
     }
 
@@ -54,27 +53,23 @@ public class ModelServiceImpl implements ModelService{
         {
             Model model = optionalModel.get();
 
-            model.update(updateModelRequest.getModelName(),
+            model.updateModel(updateModelRequest.getModelName(),
                     updateModelRequest.getPrice(),
                     updateModelRequest.getContent());
 
             return UpdateModelResponse.builder()
-                    .success(true)
-                    .data("success")
-                    .error(null)
+                    .resultMessage("success")
                     .build();
         }
         else
         {
             return UpdateModelResponse.builder()
-                    .success(false)
-                    .data("fail")
-                    .error(ErrorDTO.of(ErrorCode.valueOf("BR000"),"modelId error"))
+                    .resultMessage("fail")
                     .build();
         }
     }
 
-    // 모델 삭제
+    // 모델 삭제 ( 삭제 날짜를 NULL 에서 현재 시간으로 변경 )
     @Transactional
     @Override
     public DeleteModelResponse deleteModel(Long modelId) {
@@ -83,20 +78,16 @@ public class ModelServiceImpl implements ModelService{
         if(optionalModel.isPresent())
         {
             Model model = optionalModel.get();
-            modelRepository.delete(model);
+            model.deleteModel();
 
             return DeleteModelResponse.builder()
-                    .success(true)
-                    .data("success")
-                    .error(null)
+                    .resultMessage("success")
                     .build();
         }
         else
         {
             return DeleteModelResponse.builder()
-                    .success(false)
-                    .data("fail")
-                    .error(ErrorDTO.of(ErrorCode.valueOf("BR000"),"modelId error"))
+                    .resultMessage("fail")
                     .build();
         }
     }
