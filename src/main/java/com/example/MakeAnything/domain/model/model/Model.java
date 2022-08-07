@@ -9,6 +9,7 @@ import com.example.MakeAnything.domain.user.model.User;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -35,6 +36,12 @@ public class Model extends BaseTimeEntity {
 
     private String content;
 
+    private LocalDateTime createdAt;
+
+    private LocalDateTime updatedAt;
+
+    private LocalDateTime deletedAt;
+
     @OneToOne(mappedBy = "model")
     private ModelFile modelFile;
 
@@ -54,12 +61,21 @@ public class Model extends BaseTimeEntity {
         this.modelFile = modelFile;
         this.modelImages = modelImages;
         this.modelTags = modelTags;
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = null;
+        this.deletedAt = null;
     }
 
     // 수정
-    public void update(String modelName, Long price, String content) {
+    public void updateModel(String modelName, Long price, String content) {
         this.modelName = modelName;
         this.price = price;
         this.content = content;
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    // 삭제
+    public void deleteModel() {
+        this.deletedAt = LocalDateTime.now();
     }
 }
