@@ -4,6 +4,7 @@ import com.example.MakeAnything.domain.auth.service.JwtService;
 import com.example.MakeAnything.domain.common.ApiResponse;
 import com.example.MakeAnything.domain.model.service.ModelService;
 import com.example.MakeAnything.domain.model.service.dto.*;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
