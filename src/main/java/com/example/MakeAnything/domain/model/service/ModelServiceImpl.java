@@ -1,10 +1,14 @@
 package com.example.MakeAnything.domain.model.service;
 
+import com.example.MakeAnything.domain.category.model.Category;
+import com.example.MakeAnything.domain.category.repository.CategoryRepository;
 import com.example.MakeAnything.domain.common.exception.model.ErrorDTO;
 import com.example.MakeAnything.domain.common.exception.type.ErrorCode;
 import com.example.MakeAnything.domain.model.model.Model;
 import com.example.MakeAnything.domain.model.repository.ModelRepository;
 import com.example.MakeAnything.domain.model.service.dto.*;
+import com.example.MakeAnything.domain.user.model.User;
+import com.example.MakeAnything.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.Banner;
 import org.springframework.stereotype.Service;
@@ -20,6 +24,10 @@ import java.util.stream.Collectors;
 public class ModelServiceImpl implements ModelService {
 
     private final ModelRepository modelRepository;
+
+    private final UserRepository userRepository;
+
+    private final CategoryRepository categoryRepository;
 
     // 모델 조회
     @Override
@@ -53,7 +61,11 @@ public class ModelServiceImpl implements ModelService {
     @Override
     @Transactional
     public CreateModelResponse createModel(CreateModelRequest createModelRequest) {
-        Model model = createModelRequest.toEntity();
+
+        User user = userRepository.findUserById(createModelRequest.getUserId());
+        Category category = categoryRepository.findCategoryByCategoryName(createModelRequest.getCategoryName());
+        Model model = createModelRequest.toEntity(user, category);
+
         modelRepository.save(model);
 
         return CreateModelResponse.builder()
