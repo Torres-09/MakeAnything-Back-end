@@ -2,6 +2,7 @@ package com.example.MakeAnything.domain.model.controller;
 
 import com.example.MakeAnything.domain.auth.service.JwtService;
 import com.example.MakeAnything.domain.common.ApiResponse;
+import com.example.MakeAnything.domain.common.exception.type.ErrorCode;
 import com.example.MakeAnything.domain.model.service.ModelService;
 import com.example.MakeAnything.domain.model.service.dto.*;
 import io.swagger.annotations.ApiOperation;
@@ -29,6 +30,13 @@ public class ModelController {
     @ResponseBody
     @PostMapping("")
     public ApiResponse<CreateModelResponse> createModel(@RequestBody CreateModelRequest createModelRequest) {
+
+        Long userId = jwtService.getUserId();
+
+        if (userId != createModelRequest.getUserId()) {
+            return ApiResponse.error(ErrorCode.INVALID);
+        }
+
         return ApiResponse.success(modelService.createModel(createModelRequest));
     }
 
