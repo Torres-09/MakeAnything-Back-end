@@ -9,26 +9,26 @@ import com.example.MakeAnything.domain.common.exception.BaseException;
 import com.example.MakeAnything.domain.common.exception.type.ErrorCode;
 import com.example.MakeAnything.domain.user.model.User;
 import com.example.MakeAnything.domain.user.repository.UserRepository;
-import com.example.MakeAnything.external.client.kakao.KakaoApiClient;
-import com.example.MakeAnything.external.client.kakao.dto.KakaoUserResponse;
+import com.example.MakeAnything.external.client.naver.NaverApiClient;
+import com.example.MakeAnything.external.client.naver.dto.NaverUserResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class KakaoAuthService implements SocialAuthService {
+public class NaverAuthService implements SocialAuthService {
 
     private final UserRepository userRepository;
 
     private final RefreshTokenRepository refreshTokenRepository;
 
-    private final KakaoApiClient kakaoApiClient;
+    private final NaverApiClient naverApiClient;
 
     private final JwtService jwtService;
 
     @Override
     public LoginResponse login(LoginSocialRequest request) {
-        KakaoUserResponse userInfo = kakaoApiClient.getUserInfo(request.getToken());
+        NaverUserResponse userInfo = naverApiClient.getUserInfo(request.getToken());
 
         User user = userRepository.findBySocialId(userInfo.getId())
                 .orElseThrow(() -> new BaseException(ErrorCode.NOTFOUND_USER));
@@ -44,7 +44,7 @@ public class KakaoAuthService implements SocialAuthService {
     @Override
     public LoginResponse signUp(SignUpSocialRequest request) {
 
-        KakaoUserResponse userInfo = kakaoApiClient.getUserInfo(request.getToken());
+        NaverUserResponse userInfo = naverApiClient.getUserInfo(request.getToken());
 
         if (userRepository.existsBySocialId(userInfo.getId())) {
             throw new BaseException(ErrorCode.CONFLICT_USER);
