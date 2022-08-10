@@ -28,9 +28,9 @@ public class CommentServiceImpl implements CommentService{
     // 댓글 생성
     @Override
     @Transactional
-    public CreateCommentResponse createComment(Long modelId, CreateCommentRequest createCommentRequest) {
+    public CreateCommentResponse createComment(Long modelId,Long userId, CreateCommentRequest createCommentRequest) {
         Model model = modelRepository.findModelById(modelId);
-        User user = model.getUser();
+        User user = userRepository.findUserById(userId);
 
         Comment newComment = Comment.builder()
                 .model(model)
@@ -39,6 +39,7 @@ public class CommentServiceImpl implements CommentService{
                 .build();
 
         commentRepository.save(newComment);
+
         return CreateCommentResponse.builder()
                 .resultMessage("success")
                 .build();
