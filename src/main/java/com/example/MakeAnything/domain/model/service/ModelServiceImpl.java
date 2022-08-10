@@ -33,7 +33,7 @@ public class ModelServiceImpl implements ModelService {
     @Override
     @Transactional(readOnly = true)
     public List<GetAllModelsResponse> getAllModels() {
-        return modelRepository.findAll().stream()
+        return modelRepository.findAllByIdOrderByIdDesc().stream()
                 .filter(model -> model.getDeletedAt() == null)
                 .map(model -> GetAllModelsResponse.of(model, 0L))
                 .collect(Collectors.toList());
@@ -82,7 +82,9 @@ public class ModelServiceImpl implements ModelService {
         if (optionalModel.isPresent()) {
             Model model = optionalModel.get();
 
-            model.updateModel(updateModelRequest.getModelName(),
+            Category category = categoryRepository.findCategoryByCategoryName(updateModelRequest.getCategoryName());
+
+            model.updateModel(category, updateModelRequest.getModelName(),
                     updateModelRequest.getPrice(),
                     updateModelRequest.getContent());
 
@@ -126,4 +128,5 @@ public class ModelServiceImpl implements ModelService {
     }
 
     // 상위 모델 조회
+    // 태그로 모델 검색
 }
