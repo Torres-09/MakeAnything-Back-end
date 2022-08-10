@@ -13,4 +13,7 @@ public interface CommentService {
 
     // 댓글 삭제
     DeleteCommentResponse deleteComment(Long modelId, Long userId, Long commentId);
+
+    // 댓글 조회
+    GetCommentsResponse getComments(Long modelId);
 }

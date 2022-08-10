@@ -12,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class CommentServiceImpl implements CommentService{
@@ -72,6 +74,19 @@ public class CommentServiceImpl implements CommentService{
         comment.deleteComment();
 
         return DeleteCommentResponse.builder()
+                .resultMessage("success")
+                .build();
+    }
+
+    // 댓글 조회
+    @Override
+    @Transactional
+    public GetCommentsResponse getComments(Long modelId) {
+        Model modelById = modelRepository.findModelById(modelId);
+        List<Comment> comments = commentRepository.findCommentsByModel(modelById);
+
+        return GetCommentsResponse.builder()
+                .comments(comments)
                 .resultMessage("success")
                 .build();
     }
