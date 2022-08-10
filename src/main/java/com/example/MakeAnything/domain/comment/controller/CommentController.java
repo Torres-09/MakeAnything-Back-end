@@ -24,7 +24,8 @@ public class CommentController {
     @PostMapping("/{modelId}")
     @ApiOperation(value = "댓글 등록")
     public ApiResponse<CreateCommentResponse> createComment(@PathVariable("modelId") Long modelId, @RequestBody CreateCommentRequest createCommentRequest) {
-        return ApiResponse.success(commentService.createComment(modelId, createCommentRequest));
+        Long userId = jwtService.getUserId();
+        return ApiResponse.success(commentService.createComment(modelId,userId, createCommentRequest));
     }
 
     @ResponseBody

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface CommentService {
     // 댓글 생성
-    CreateCommentResponse createComment(Long modelId, CreateCommentRequest createCommentRequest);
+    CreateCommentResponse createComment(Long modelId,Long userId, CreateCommentRequest createCommentRequest);
 
     UpdateCommentResponse updateComment(Long modelId, Long userId, UpdateCommentRequest updateCommentRequest);
 }
