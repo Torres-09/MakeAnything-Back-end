@@ -51,7 +51,8 @@ public class Model extends BaseTimeEntity {
     private List<ModelTag> modelTags;
 
     @Builder
-    public Model(User user, Category category, String modelName, Long price, String content, ModelFile modelFile, List<ModelImage> modelImages, List<ModelTag> modelTags) {
+    public Model(User user, Category category, String modelName, Long price, String content,
+                 ModelFile modelFile, List<ModelImage> modelImages, List<ModelTag> modelTags) {
         this.user = user;
         this.category = category;
         this.modelName = modelName;
@@ -65,8 +66,9 @@ public class Model extends BaseTimeEntity {
         this.deletedAt = null;
     }
 
-    // 수정
-    public void updateModel(String modelName, Long price, String content) {
+    // 수정 ( 파일과 이미지는 수정 불가 ) 태그는 추가로 구현해야 함.
+    public void updateModel(Category category, String modelName, Long price, String content) {
+        this.category = category;
         this.modelName = modelName;
         this.price = price;
         this.content = content;

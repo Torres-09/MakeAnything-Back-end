@@ -14,14 +14,17 @@ public class UpdateModelRequest {
     private Long price;
     private String content;
 
-    // category
-    // user
+    private String categoryName;
+
+//    private List<String> tags;
     // tag
 
     @Builder
-    public UpdateModelRequest(String modelName, Long price, String content) {
+    public UpdateModelRequest(String modelName, Long price, String content,String categoryName) {
         this.modelName = modelName;
         this.price = price;
         this.content = content;
+        this.categoryName = categoryName;
+//        this.tags = tags;
     }
 }
