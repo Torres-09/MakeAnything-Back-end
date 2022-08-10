@@ -101,11 +101,12 @@ public class ModelServiceImpl implements ModelService {
     // 모델 삭제 ( 삭제 날짜를 NULL 에서 현재 시간으로 변경 )
     @Transactional
     @Override
-    public DeleteModelResponse deleteModel(Long modelId) {
-        Optional<Model> optionalModel = modelRepository.findById(modelId);
+    public DeleteModelResponse deleteModel(Long modelId, Long userId) {
 
-        if (optionalModel.isPresent()) {
-            Model model = optionalModel.get();
+        Optional<Model> optionalModel = modelRepository.findById(modelId);
+        Model model = optionalModel.orElseThrow(NullPointerException::new);
+
+        if (model.getUser().getId() != userId) {
             model.deleteModel();
 
             return DeleteModelResponse.builder()

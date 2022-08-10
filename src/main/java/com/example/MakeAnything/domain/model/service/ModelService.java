@@ -25,7 +25,7 @@ public interface ModelService {
     UpdateModelResponse updateModel(Long modelId, UpdateModelRequest updateModelRequest);
 
     // 모델 삭제
-    DeleteModelResponse deleteModel(Long modelId);
+    DeleteModelResponse deleteModel(Long modelId, Long userId);
 
     // 이름으로 모델 검색
     List<GetModelByNameResponse> getModelByName(GetModelByNameRequest getModelByNameRequest);
