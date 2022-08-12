@@ -5,6 +5,9 @@ import com.example.MakeAnything.domain.common.ApiResponse;
 import com.example.MakeAnything.domain.common.exception.type.ErrorCode;
 import com.example.MakeAnything.domain.model.service.ModelService;
 import com.example.MakeAnything.domain.model.service.dto.*;
+import com.example.MakeAnything.domain.modelfile.model.ModelFile;
+import com.example.MakeAnything.domain.modelfile.service.ModelFileService;
+import com.example.MakeAnything.domain.modelimage.service.ModelImageService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +22,9 @@ public class ModelController {
     private final ModelService modelService;
 
     private final JwtService jwtService;
+
+    private final ModelFileService modelFileService;
+    private final ModelImageService modelImageService;
 
     // 전체 모델 조회
     @GetMapping("")
@@ -39,7 +45,11 @@ public class ModelController {
             return ApiResponse.error(ErrorCode.INVALID);
         }
 
-        return ApiResponse.success(modelService.createModel(createModelRequest));
+        CreateModelResponse createModelResponse = modelService.createModel(createModelRequest);
+        modelFileService.createModelFile(createModelResponse.getModelId(), createModelRequest.getModelFile());
+        modelImageService.createModelImages(createModelResponse.getModelId(), createModelRequest.getImages());
+
+        return ApiResponse.success(createModelResponse);
     }
 
     // 모델을 카테고리로 조회
