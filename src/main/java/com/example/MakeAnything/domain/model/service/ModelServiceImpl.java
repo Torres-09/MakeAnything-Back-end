@@ -7,6 +7,14 @@ import com.example.MakeAnything.domain.common.exception.type.ErrorCode;
 import com.example.MakeAnything.domain.model.model.Model;
 import com.example.MakeAnything.domain.model.repository.ModelRepository;
 import com.example.MakeAnything.domain.model.service.dto.*;
+import com.example.MakeAnything.domain.modelfile.model.ModelFile;
+import com.example.MakeAnything.domain.modelfile.repository.ModelFileRepository;
+import com.example.MakeAnything.domain.modelimage.model.ModelImage;
+import com.example.MakeAnything.domain.modelimage.repository.ModelImageRepository;
+import com.example.MakeAnything.domain.modeltag.model.ModelTag;
+import com.example.MakeAnything.domain.modeltag.repository.ModelTagRepository;
+import com.example.MakeAnything.domain.tag.model.Tag;
+import com.example.MakeAnything.domain.tag.repository.TagRepository;
 import com.example.MakeAnything.domain.user.model.User;
 import com.example.MakeAnything.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +22,7 @@ import org.springframework.boot.Banner;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -28,6 +37,13 @@ public class ModelServiceImpl implements ModelService {
     private final UserRepository userRepository;
 
     private final CategoryRepository categoryRepository;
+
+    private final TagRepository tagRepository;
+
+    private final ModelTagRepository modelTagRepository;
+
+    private final ModelFileRepository modelFileRepository;
+    private final ModelImageRepository modelImageRepository;
 
     // 모델 조회
     @Override
@@ -64,11 +80,41 @@ public class ModelServiceImpl implements ModelService {
 
         User user = userRepository.findUserById(createModelRequest.getUserId());
         Category category = categoryRepository.findCategoryByCategoryName(createModelRequest.getCategoryName());
+        List<Tag> tagList = new ArrayList<>();
+
+        for (String tag : createModelRequest.getTags()) {
+            Optional<Tag> optionalTag = Optional.ofNullable(tagRepository.findTagByTagName(tag));
+            Tag tag1;
+
+            // 태그가 이전에 만들어진 경우
+            if (optionalTag.isPresent()) {
+                tag1 = optionalTag.get();
+
+                // 태그가 새롭게 생기는 경우
+            } else {
+                tag1 = Tag.builder()
+                        .tagName(tag)
+                        .build();
+            }
+            tagList.add(tag1);
+        }
+
         Model model = createModelRequest.toEntity(user, category);
+
+        for (Tag tag : tagList) {
+
+            ModelTag modelTag = ModelTag.builder()
+                    .model(model)
+                    .tag(tag)
+                    .build();
+
+            modelTagRepository.save(modelTag);
+        }
 
         modelRepository.save(model);
 
         return CreateModelResponse.builder()
+                .modelId(model.getId())
                 .resultMessage("success")
                 .build();
     }

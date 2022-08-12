@@ -22,8 +22,7 @@ public class Tag {
     private List<ModelTag> modelTag;
 
     @Builder
-    public Tag(String tagName, List<ModelTag> modelTag) {
+    public Tag(String tagName) {
         this.tagName = tagName;
-        this.modelTag = modelTag;
     }
 }

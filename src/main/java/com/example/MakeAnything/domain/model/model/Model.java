@@ -51,16 +51,12 @@ public class Model extends BaseTimeEntity {
     private List<ModelTag> modelTags;
 
     @Builder
-    public Model(User user, Category category, String modelName, Long price, String content,
-                 ModelFile modelFile, List<ModelImage> modelImages, List<ModelTag> modelTags) {
+    public Model(User user, Category category, String modelName, Long price, String content) {
         this.user = user;
         this.category = category;
         this.modelName = modelName;
         this.price = price;
         this.content = content;
-        this.modelFile = modelFile;
-        this.modelImages = modelImages;
-        this.modelTags = modelTags;
         this.createdAt = LocalDateTime.now();
         this.updatedAt = null;
         this.deletedAt = null;

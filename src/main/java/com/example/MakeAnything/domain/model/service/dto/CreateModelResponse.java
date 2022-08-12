@@ -9,10 +9,13 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class CreateModelResponse {
+
+    private Long modelId;
     private String resultMessage;
 
     @Builder
-    public CreateModelResponse(String resultMessage) {
+    public CreateModelResponse(Long modelId, String resultMessage) {
+        this.modelId = modelId;
         this.resultMessage = resultMessage;
     }
 }
