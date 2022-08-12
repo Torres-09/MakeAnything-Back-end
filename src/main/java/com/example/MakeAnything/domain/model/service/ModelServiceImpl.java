@@ -49,7 +49,7 @@ public class ModelServiceImpl implements ModelService {
     @Override
     @Transactional(readOnly = true)
     public List<GetAllModelsResponse> getAllModels() {
-        return modelRepository.findAllByIdOrderByIdDesc().stream()
+        return modelRepository.findAll().stream()
                 .filter(model -> model.getDeletedAt() == null)
                 .map(model -> GetAllModelsResponse.of(model, 0L))
                 .collect(Collectors.toList());

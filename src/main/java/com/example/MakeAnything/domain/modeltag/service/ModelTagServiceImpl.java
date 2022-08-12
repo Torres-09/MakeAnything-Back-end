@@ -1,7 +1,8 @@
-package com.example.MakeAnything.domain.modeltag.model;
+package com.example.MakeAnything.domain.modeltag.service;
 
 import com.example.MakeAnything.domain.model.model.Model;
 import com.example.MakeAnything.domain.model.repository.ModelRepository;
+import com.example.MakeAnything.domain.modeltag.model.ModelTag;
 import com.example.MakeAnything.domain.modeltag.repository.ModelTagRepository;
 import com.example.MakeAnything.domain.modeltag.service.ModelTagService;
 import com.example.MakeAnything.domain.tag.model.Tag;

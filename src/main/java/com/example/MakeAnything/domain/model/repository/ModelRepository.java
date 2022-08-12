@@ -16,6 +16,4 @@ public interface ModelRepository extends JpaRepository<Model, Long> {
     Model findModelById(Long modelId);
 
     List<Model> findModelsByModelName(String modelName);
-
-    List<Model> findAllByIdOrderByIdDesc();
 }
