@@ -80,37 +80,8 @@ public class ModelServiceImpl implements ModelService {
 
         User user = userRepository.findUserById(createModelRequest.getUserId());
         Category category = categoryRepository.findCategoryByCategoryName(createModelRequest.getCategoryName());
-        List<Tag> tagList = new ArrayList<>();
-
-        for (String tag : createModelRequest.getTags()) {
-            Optional<Tag> optionalTag = Optional.ofNullable(tagRepository.findTagByTagName(tag));
-            Tag tag1;
-
-            // 태그가 이전에 만들어진 경우
-            if (optionalTag.isPresent()) {
-                tag1 = optionalTag.get();
-
-                // 태그가 새롭게 생기는 경우
-            } else {
-                tag1 = Tag.builder()
-                        .tagName(tag)
-                        .build();
-            }
-            tagList.add(tag1);
-        }
 
         Model model = createModelRequest.toEntity(user, category);
-
-        for (Tag tag : tagList) {
-
-            ModelTag modelTag = ModelTag.builder()
-                    .model(model)
-                    .tag(tag)
-                    .build();
-
-            modelTagRepository.save(modelTag);
-        }
-
         modelRepository.save(model);
 
         return CreateModelResponse.builder()
