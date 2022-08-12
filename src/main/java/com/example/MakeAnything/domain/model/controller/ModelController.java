@@ -8,6 +8,9 @@ import com.example.MakeAnything.domain.model.service.dto.*;
 import com.example.MakeAnything.domain.modelfile.model.ModelFile;
 import com.example.MakeAnything.domain.modelfile.service.ModelFileService;
 import com.example.MakeAnything.domain.modelimage.service.ModelImageService;
+import com.example.MakeAnything.domain.modeltag.service.ModelTagService;
+import com.example.MakeAnything.domain.tag.model.Tag;
+import com.example.MakeAnything.domain.tag.service.TagService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +28,8 @@ public class ModelController {
 
     private final ModelFileService modelFileService;
     private final ModelImageService modelImageService;
+    private final TagService tagService;
+    private final ModelTagService modelTagService;
 
     // 전체 모델 조회
     @GetMapping("")
@@ -46,6 +51,8 @@ public class ModelController {
         }
 
         CreateModelResponse createModelResponse = modelService.createModel(createModelRequest);
+        List<Tag> tags = tagService.createTags(createModelRequest.getTags());
+        modelTagService.createModelTag(createModelResponse.getModelId(),tags);
         modelFileService.createModelFile(createModelResponse.getModelId(), createModelRequest.getModelFile());
         modelImageService.createModelImages(createModelResponse.getModelId(), createModelRequest.getImages());
 
