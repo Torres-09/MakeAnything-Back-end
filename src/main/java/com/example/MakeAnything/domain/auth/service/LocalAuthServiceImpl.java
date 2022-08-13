@@ -2,9 +2,7 @@ package com.example.MakeAnything.domain.auth.service;
 
 import com.example.MakeAnything.domain.auth.model.RefreshToken;
 import com.example.MakeAnything.domain.auth.repository.RefreshTokenRepository;
-import com.example.MakeAnything.domain.auth.service.dto.LoginLocalRequest;
-import com.example.MakeAnything.domain.auth.service.dto.LoginResponse;
-import com.example.MakeAnything.domain.auth.service.dto.SignUpLocalRequest;
+import com.example.MakeAnything.domain.auth.service.dto.*;
 import com.example.MakeAnything.domain.common.exception.BaseException;
 import com.example.MakeAnything.domain.common.exception.type.ErrorCode;
 import com.example.MakeAnything.domain.user.model.User;
@@ -12,6 +10,8 @@ import com.example.MakeAnything.domain.user.repository.UserRepository;
 import com.example.MakeAnything.utils.SHA256;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -59,5 +59,45 @@ public class LocalAuthServiceImpl implements LocalAuthService{
         return LoginResponse.of(user.getId(), accessToken, refreshToken);
     }
 
+    @Override
+    public FindEmailResponse findEmailByPhoneNumber(FindEmailRequest request) {
+
+        User user = userRepository.findByPhoneNumber(request.getPhoneNumber())
+                .orElseThrow(() -> new BaseException(ErrorCode.NOTFOUND_USER));
+
+        return FindEmailResponse.of(user.getEmail());
+    }
+
+    @Transactional
+    @Override
+    public UpdatePWResponse updatePWByEmail(UpdatePWRequest request) {
+
+        User user = userRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new BaseException(ErrorCode.NOTFOUND_USER));
+
+        String tempPassword = getTempPassword();
+
+        String encryptPassword = new SHA256().encrypt(tempPassword);
+
+        System.out.println("encryptPassword = " + encryptPassword);
+
+        user.updatePassword(encryptPassword);
+
+        return UpdatePWResponse.of(tempPassword);
+    }
+
+    private String getTempPassword(){
+        char[] charSet = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F',
+                'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
+
+        String tempPassword = "";
+
+        int idx = 0;
+        for (int i = 0; i < 10; i++) {
+            idx = (int) (charSet.length * Math.random());
+            tempPassword += charSet[idx];
+        }
+        return tempPassword;
+    }
 
 }

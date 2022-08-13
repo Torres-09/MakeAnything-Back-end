@@ -25,9 +25,9 @@ public class SellModelsResponse {
 
     private LocalDateTime createdAt;
 
-    public static SellModelsResponse of(Model model, Long downloadCount) {
+    public static SellModelsResponse of(Model model) {
 
         return new SellModelsResponse(model.getId(), model.getModelName(), model.getUser().getId(), model.getUser().getUserName(),
-                downloadCount, model.getPrice(), model.getCreatedAt());
+                model.getDownloadCount(), model.getPrice(), model.getCreatedAt());
     }
 }

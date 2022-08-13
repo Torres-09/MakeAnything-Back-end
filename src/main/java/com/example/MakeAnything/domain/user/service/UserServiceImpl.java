@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<SellModelsResponse> getSellModels(Long userId) {
         return modelRepository.findAllByUserId(userId).stream()
-                .map(model -> SellModelsResponse.of(model, 0L))
+                .map(model -> SellModelsResponse.of(model))
                 .collect(Collectors.toList());
     }
 
@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<WishModelsResponse> getWishModels(Long userId) {
         return wishlistRepository.findAllByUserId(userId).stream()
-                .map(wishlist -> WishModelsResponse.of(wishlist.getModel(), wishlist.getUser(), 0L))
+                .map(wishlist -> WishModelsResponse.of(wishlist.getModel()))
                 .collect(Collectors.toList());
     }
 }
