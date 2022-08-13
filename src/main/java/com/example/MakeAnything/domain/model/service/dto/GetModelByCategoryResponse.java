@@ -18,8 +18,8 @@ public class GetModelByCategoryResponse {
     private String userNickName;
     private ModelImage modelImage;
 
-    public static GetModelByCategoryResponse of(Model model, Long downloadCount) {
+    public static GetModelByCategoryResponse of(Model model) {
         return new GetModelByCategoryResponse(model.getId(), model.getModelName(), model.getPrice()
-                , downloadCount, model.getUser().getNickName(), model.getModelImages().get(0));
+                , model.getDownloadCount(), model.getUser().getNickName(), model.getModelImages().get(0));
     }
 }

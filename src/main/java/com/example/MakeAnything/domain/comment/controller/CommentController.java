@@ -26,11 +26,11 @@ public class CommentController {
     }
 
     @ResponseBody
-    @PatchMapping("/{modelId}")
+    @PatchMapping("/{modelId}/{commentId}")
     @ApiOperation(value = "댓글 수정")
-    public ApiResponse<UpdateCommentResponse> updateComment(@PathVariable("modelId") Long modelId, @RequestBody UpdateCommentRequest updateCommentRequest) {
+    public ApiResponse<UpdateCommentResponse> updateComment(@PathVariable("modelId") Long modelId, @PathVariable("commentId") Long commentId, @RequestBody UpdateCommentRequest updateCommentRequest) {
         Long userId = jwtService.getUserId();
-        return ApiResponse.success(commentService.updateComment(modelId, userId, updateCommentRequest));
+        return ApiResponse.success(commentService.updateComment(commentId, userId, updateCommentRequest));
     }
 
     @DeleteMapping("/{modelId}/{commentId}")
