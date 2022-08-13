@@ -4,6 +4,7 @@ import com.example.MakeAnything.domain.auth.service.*;
 import com.example.MakeAnything.domain.auth.service.dto.*;
 import com.example.MakeAnything.domain.common.ApiResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -60,6 +61,18 @@ public class AuthController {
         refreshTokenService.logout(userId);
 
         return ApiResponse.success(null);
+    }
+
+    @PostMapping("/auth/find-email")
+    public ApiResponse<FindEmailResponse> findEmailByPhoneNumber(@RequestBody FindEmailRequest request) {
+
+        return ApiResponse.success(localAuthService.findEmailByPhoneNumber(request));
+    }
+
+    @PatchMapping("/auth/update-pw")
+    public ApiResponse<UpdatePWResponse> updatePWByEmail(@RequestBody UpdatePWRequest request) {
+
+        return ApiResponse.success(localAuthService.updatePWByEmail(request));
     }
 
 }
