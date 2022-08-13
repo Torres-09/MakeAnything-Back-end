@@ -19,8 +19,8 @@ public class GetAllModelsResponse {
     private ModelImage modelImage;
 
 
-    public static GetAllModelsResponse of(Model model, Long downloadCount) {
-        return new GetAllModelsResponse(model.getId(), model.getModelName(), model.getPrice(), downloadCount
+    public static GetAllModelsResponse of(Model model) {
+        return new GetAllModelsResponse(model.getId(), model.getModelName(), model.getPrice(), model.getDownloadCount()
                 , model.getUser().getNickName(), model.getModelImages().get(0));
     }
 }

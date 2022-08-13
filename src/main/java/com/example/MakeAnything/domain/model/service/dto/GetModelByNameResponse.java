@@ -13,10 +13,10 @@ public class GetModelByNameResponse {
     private Long price;
     private Long downloadCount;
     private String userNickName;
-    private ModelImage modelImage;
+    private String modelImage;
 
-    public static GetModelByNameResponse of(Model model, Long downloadCount) {
+    public static GetModelByNameResponse of(Model model) {
         return new GetModelByNameResponse(model.getId(), model.getModelName(), model.getPrice(),
-                downloadCount, model.getUser().getNickName(), model.getModelImages().get(0));
+                model.getDownloadCount(), model.getUser().getNickName(), model.getModelImages().get(0).getImageFullPath());
     }
 }

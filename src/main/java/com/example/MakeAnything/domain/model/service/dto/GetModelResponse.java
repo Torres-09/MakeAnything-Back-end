@@ -23,8 +23,8 @@ public class GetModelResponse {
     private Long fileSize;
 //    private List<String> tags;
 
-    public static GetModelResponse of(Model model, Long downloadCount) {
+    public static GetModelResponse of(Model model) {
         return new GetModelResponse(model.getModelName(), model.getPrice(),model.getContent(),
-                downloadCount, model.getModelImages(),model.getModelFile().getFileSize());
+                model.getDownloadCount(), model.getModelImages(),model.getModelFile().getFileSize());
     }
 }

@@ -47,13 +47,17 @@ public class CommentServiceImpl implements CommentService{
     // 댓글 수정
     @Override
     @Transactional
-    public UpdateCommentResponse updateComment(Long modelId, Long userId, UpdateCommentRequest updateCommentRequest) {
-        Model model = modelRepository.findModelById(modelId);
-        User user = userRepository.findUserById(userId);
-        Comment comment = commentRepository.findCommentById(updateCommentRequest.getId());
+    public UpdateCommentResponse updateComment(Long commentId, Long userId, UpdateCommentRequest updateCommentRequest) {
+        Comment comment = commentRepository.findCommentById(commentId);
+        Long userIdByComment = comment.getUser().getId();
 
-        comment.updateComment(updateCommentRequest.getContent());
-
+        if (userIdByComment == userId) {
+            comment.updateComment(updateCommentRequest.getContent());
+        } else {
+            return UpdateCommentResponse.builder()
+                    .resultMessage("fail")
+                    .build();
+        }
         return UpdateCommentResponse.builder()
                 .resultMessage("success")
                 .build();
