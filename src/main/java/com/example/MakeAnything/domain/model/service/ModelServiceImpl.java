@@ -51,7 +51,7 @@ public class ModelServiceImpl implements ModelService {
     public List<GetAllModelsResponse> getAllModels() {
         return modelRepository.findAll().stream()
                 .filter(model -> model.getDeletedAt() == null)
-                .map(model -> GetAllModelsResponse.of(model, 0L))
+                .map(model -> GetAllModelsResponse.of(model))
                 .collect(Collectors.toList());
     }
 
@@ -60,7 +60,7 @@ public class ModelServiceImpl implements ModelService {
     @Transactional(readOnly = true)
     public GetModelResponse getModel(Long modelId) {
         Model model = modelRepository.findModelById(modelId);
-        GetModelResponse getModelResponse = GetModelResponse.of(model, 0L);
+        GetModelResponse getModelResponse = GetModelResponse.of(model);
         return getModelResponse;
     }
 
@@ -69,7 +69,7 @@ public class ModelServiceImpl implements ModelService {
     @Transactional(readOnly = true)
     public List<GetModelByCategoryResponse> getModelsByCategory(Long categoryId) {
         return modelRepository.findModelsByCategory(categoryId).stream()
-                .map(model -> GetModelByCategoryResponse.of(model, 0L))
+                .map(model -> GetModelByCategoryResponse.of(model))
                 .collect(Collectors.toList());
     }
 
@@ -141,7 +141,7 @@ public class ModelServiceImpl implements ModelService {
     @Override
     public List<GetModelByNameResponse> getModelByName(GetModelByNameRequest getModelByNameRequest) {
         return modelRepository.findModelsByModelName(getModelByNameRequest.getModelName()).stream()
-                .map(model -> GetModelByNameResponse.of(model, 0L))
+                .map(model -> GetModelByNameResponse.of(model))
                 .collect(Collectors.toList());
     }
 

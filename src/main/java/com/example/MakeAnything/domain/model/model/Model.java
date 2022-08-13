@@ -35,6 +35,8 @@ public class Model extends BaseTimeEntity {
 
     private String content;
 
+    private Long downloadCount;
+
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
@@ -57,6 +59,7 @@ public class Model extends BaseTimeEntity {
         this.modelName = modelName;
         this.price = price;
         this.content = content;
+        this.downloadCount = Long.valueOf(0);
         this.createdAt = LocalDateTime.now();
         this.updatedAt = null;
         this.deletedAt = null;
@@ -74,5 +77,10 @@ public class Model extends BaseTimeEntity {
     // 삭제
     public void deleteModel() {
         this.deletedAt = LocalDateTime.now();
+    }
+
+    // 다운로드
+    public void downloadStatusActive() {
+        this.downloadCount += 1;
     }
 }
