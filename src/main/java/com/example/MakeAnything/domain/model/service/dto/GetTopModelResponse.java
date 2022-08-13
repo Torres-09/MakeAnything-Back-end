@@ -18,8 +18,8 @@ public class GetTopModelResponse {
     private String userNickName;
     private ModelImage modelImage;
 
-    public static GetTopModelResponse of(Model model, Long downloadCount) {
-        return new GetTopModelResponse(model.getId(), model.getModelName(), model.getPrice(), downloadCount,
+    public static GetTopModelResponse of(Model model) {
+        return new GetTopModelResponse(model.getId(), model.getModelName(), model.getPrice(), model.getDownloadCount(),
                 model.getUser().getNickName(), model.getModelImages().get(0));
     }
 }
