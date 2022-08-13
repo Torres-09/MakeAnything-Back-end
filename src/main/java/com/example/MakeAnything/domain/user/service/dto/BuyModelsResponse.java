@@ -25,9 +25,9 @@ public class BuyModelsResponse {
 
     private LocalDateTime paidAt;
 
-    public static BuyModelsResponse of(Model model, Long downloadCount) {
+    public static BuyModelsResponse of(Model model) {
 
         return new BuyModelsResponse(model.getId(), model.getModelName(), model.getUser().getId(), model.getUser().getUserName(),
-                downloadCount, model.getPrice(), LocalDateTime.now());
+                model.getDownloadCount(), model.getPrice(), LocalDateTime.now());
     }
 }
