@@ -38,12 +38,6 @@ public class ModelServiceImpl implements ModelService {
 
     private final CategoryRepository categoryRepository;
 
-    private final TagRepository tagRepository;
-
-    private final ModelTagRepository modelTagRepository;
-
-    private final ModelFileRepository modelFileRepository;
-    private final ModelImageRepository modelImageRepository;
 
     // 모델 조회
     @Override
@@ -79,7 +73,14 @@ public class ModelServiceImpl implements ModelService {
     public CreateModelResponse createModel(CreateModelRequest createModelRequest) {
 
         User user = userRepository.findUserById(createModelRequest.getUserId());
-        Category category = categoryRepository.findCategoryByCategoryName(createModelRequest.getCategoryName());
+        Optional<Category> optionalCategory = Optional.ofNullable(categoryRepository.findCategoryByCategoryName(createModelRequest.getCategoryName()));
+        Category category = new Category();
+
+        if (optionalCategory.isPresent()) {
+            category = optionalCategory.get();
+        } else {
+            categoryRepository.save(Category.builder().categoryName(createModelRequest.getCategoryName()).build());
+        }
 
         Model model = createModelRequest.toEntity(user, category);
         modelRepository.save(model);
@@ -146,5 +147,11 @@ public class ModelServiceImpl implements ModelService {
     }
 
     // 상위 모델 조회
-    // 태그로 모델 검색
+    @Transactional(readOnly = true)
+    @Override
+    public List<GetTopModelResponse> getTopModel() {
+        return modelRepository.findAllByOrderByDownloadCountDesc().stream()
+                .map(model -> GetTopModelResponse.of(model))
+                .collect(Collectors.toList());
+    }
 }

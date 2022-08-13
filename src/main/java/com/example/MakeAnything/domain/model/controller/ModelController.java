@@ -86,7 +86,7 @@ public class ModelController {
     @GetMapping("/topRated")
     @ApiOperation(value = "다운로드 상위 모델 조회")
     public ApiResponse<List<GetTopModelResponse>> getTopModel() {
-        return null;
+        return ApiResponse.success(modelService.getTopModel());
     }
 
     // 모델 상세 정보 조회

@@ -23,8 +23,7 @@ public class Category {
     private List<Model> model;
 
     @Builder
-    public Category(String categoryName, List<Model> model) {
+    public Category(String categoryName) {
         this.categoryName = categoryName;
-        this.model = model;
     }
 }
