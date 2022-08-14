@@ -15,7 +15,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor
-public class Model extends BaseTimeEntity {
+public class Model{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
