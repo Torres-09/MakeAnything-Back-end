@@ -26,9 +26,9 @@ public class WishModelsResponse {
 
     private LocalDateTime createdAt;
 
-    public static WishModelsResponse of(Model model, User user, Long downloadCount) {
+    public static WishModelsResponse of(Model model) {
 
-        return new WishModelsResponse(model.getId(), model.getModelName(), user.getId(), user.getUserName(),
-                downloadCount, model.getPrice(), model.getCreatedAt());
+        return new WishModelsResponse(model.getId(), model.getModelName(), model.getUser().getId(), model.getUser().getUserName(),
+                model.getDownloadCount(), model.getPrice(), model.getCreatedAt());
     }
 }
