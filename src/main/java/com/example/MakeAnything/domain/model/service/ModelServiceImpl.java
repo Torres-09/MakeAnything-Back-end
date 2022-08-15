@@ -73,9 +73,11 @@ public class ModelServiceImpl implements ModelService {
     public CreateModelResponse createModel(CreateModelRequest createModelRequest) {
 
         User user = userRepository.findUserById(createModelRequest.getUserId());
+
         Optional<Category> optionalCategory = Optional.ofNullable(categoryRepository.findCategoryByCategoryName(createModelRequest.getCategoryName()));
         Category category = new Category();
 
+        // enum 으로하고 string 으로
         if (optionalCategory.isPresent()) {
             category = optionalCategory.get();
         } else {
