@@ -12,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+
 @Service
 @RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService{
@@ -24,10 +26,20 @@ public class OrderServiceImpl implements OrderService{
 
     @Transactional
     @Override
-    public CreateOrderResponse createOrder(Long userId, Long modelId, CreateOrderRequest createOrderRequest) {
-
+    public CreateOrderResponse createOrder(Long userId, Long modelId, CreateOrderRequest createOrderRequest, BigDecimal serverAmount) {
         Model model = modelRepository.findModelById(modelId);
         User user = userRepository.findUserById(userId);
+
+
+        // 결제한 금액과 모델의 금액이 일치하지 않는 경우 -> 클라이언트가 스크립트를 조작하여 결제한 경우!
+        if (serverAmount.longValue() != model.getPrice()) {
+            CreateOrderResponse createOrderResponse = CreateOrderResponse.builder()
+                    .orderId(null)
+                    .resultMessage("fail")
+                    .build();
+
+            return createOrderResponse;
+        }
 
         Order order = Order.builder()
                 .amount(model.getPrice())
