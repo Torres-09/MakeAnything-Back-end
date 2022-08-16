@@ -18,26 +18,4 @@ public class DownloadServiceImpl implements DownloadService{
 
     private final OrderRepository orderRepository;
 
-
-    @Override
-    @Transactional
-    public Long createDownload(Long orderId) {
-
-        Optional<Order> optionalOrder = orderRepository.findById(orderId);
-        Order order = new Order();
-
-        if (optionalOrder.isPresent()) {
-            order = optionalOrder.get();
-        }
-
-
-        Download download = Download.builder()
-                .order(order)
-                .downloadStatus(false)
-                .build();
-
-        downloadRepository.save(download);
-
-        return download.getId();
-    }
 }
