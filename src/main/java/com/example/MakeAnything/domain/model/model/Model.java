@@ -25,8 +25,7 @@ public class Model{
     @JoinColumn(name = "userId")
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "categoryId")
+    @Convert(converter = Category.class)
     private Category category;
 
     private String modelName;
