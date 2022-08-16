@@ -11,14 +11,4 @@ import org.springframework.transaction.annotation.Transactional;
 public class CategoryServiceImpl implements CategoryService{
 
     private final CategoryRepository categoryRepository;
-
-    @Transactional
-    @Override
-    public void createCategory(String categoryName) {
-        Category category = Category.builder()
-                .categoryName(categoryName)
-                .build();
-
-        categoryRepository.save(category);
-    }
 }
