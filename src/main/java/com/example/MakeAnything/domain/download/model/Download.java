@@ -17,14 +17,9 @@ public class Download {
 
     private Boolean downloadStatus;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "orderId")
-    private Order order;
-
     @Builder
-    public Download(Boolean downloadStatus, Order order) {
+    public Download(Boolean downloadStatus) {
         this.downloadStatus = downloadStatus;
-        this.order = order;
     }
 
     public void downloadDone() {
