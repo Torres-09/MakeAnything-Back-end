@@ -31,4 +31,4 @@ logging:
       hibernate:
         type:
           descriptor:
-            sql: traceq
+            sql: trace
