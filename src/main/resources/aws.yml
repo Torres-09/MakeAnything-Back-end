@@ -1,0 +1,9 @@
+cloud:
+  aws:
+    s3:
+      bucket: makeanything
+    region:
+      static: ap-northeast-2
+    credentials:
+      accessKey: AKIAV3BMVREJWKWJHQEO
+      secretKey: 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

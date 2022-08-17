@@ -1,6 +1,7 @@
 package com.example.MakeAnything.domain.model.model;
 
 import com.example.MakeAnything.domain.category.model.Category;
+import com.example.MakeAnything.domain.category.model.CategoryConverter;
 import com.example.MakeAnything.domain.common.BaseTimeEntity;
 import com.example.MakeAnything.domain.modelfile.model.ModelFile;
 import com.example.MakeAnything.domain.modelimage.model.ModelImage;
@@ -25,7 +26,7 @@ public class Model{
     @JoinColumn(name = "userId")
     private User user;
 
-    @Convert(converter = Category.class)
+    @Convert(converter = CategoryConverter.class)
     private Category category;
 
     private String modelName;

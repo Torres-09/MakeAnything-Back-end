@@ -1,30 +1,16 @@
 package com.example.MakeAnything.domain.model.service;
 
 import com.example.MakeAnything.domain.category.model.Category;
-import com.example.MakeAnything.domain.category.repository.CategoryRepository;
-import com.example.MakeAnything.domain.common.exception.model.ErrorDTO;
-import com.example.MakeAnything.domain.common.exception.type.ErrorCode;
 import com.example.MakeAnything.domain.model.model.Model;
 import com.example.MakeAnything.domain.model.repository.ModelRepository;
 import com.example.MakeAnything.domain.model.service.dto.*;
-import com.example.MakeAnything.domain.modelfile.model.ModelFile;
-import com.example.MakeAnything.domain.modelfile.repository.ModelFileRepository;
-import com.example.MakeAnything.domain.modelimage.model.ModelImage;
-import com.example.MakeAnything.domain.modelimage.repository.ModelImageRepository;
-import com.example.MakeAnything.domain.modeltag.model.ModelTag;
-import com.example.MakeAnything.domain.modeltag.repository.ModelTagRepository;
-import com.example.MakeAnything.domain.tag.model.Tag;
-import com.example.MakeAnything.domain.tag.repository.TagRepository;
 import com.example.MakeAnything.domain.user.model.User;
 import com.example.MakeAnything.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.Banner;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -35,8 +21,6 @@ public class ModelServiceImpl implements ModelService {
     private final ModelRepository modelRepository;
 
     private final UserRepository userRepository;
-
-    private final CategoryRepository categoryRepository;
 
 
     // 모델 조회
@@ -93,7 +77,7 @@ public class ModelServiceImpl implements ModelService {
         if (optionalModel.isPresent()) {
             Model model = optionalModel.get();
 
-            Category category = categoryRepository.findCategoryByCategoryName(updateModelRequest.getCategoryName());
+            Category category = Category.valueOf(updateModelRequest.getCategoryName());
 
             model.updateModel(category, updateModelRequest.getModelName(),
                     updateModelRequest.getPrice(),
