@@ -3,6 +3,7 @@ package com.example.MakeAnything.domain.model.service;
 import com.example.MakeAnything.domain.model.model.Model;
 import com.example.MakeAnything.domain.model.service.dto.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -18,7 +19,7 @@ public interface ModelService {
     GetModelResponse getModel(Long modelId);
 
     // 모델 생성
-    CreateModelResponse createModel(Long userId,CreateModelRequest createModelRequest);
+    CreateModelResponse createModel(Long userId, CreateModelRequest createModelRequest, MultipartFile modelFile, List<MultipartFile> modelImages);
 
     // 모델 수정
     UpdateModelResponse updateModel(Long modelId, UpdateModelRequest updateModelRequest);

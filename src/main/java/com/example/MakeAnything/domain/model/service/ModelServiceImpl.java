@@ -14,6 +14,7 @@ import com.example.MakeAnything.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -67,7 +68,7 @@ public class ModelServiceImpl implements ModelService {
     // 모델 생성
     @Override
     @Transactional
-    public CreateModelResponse createModel(Long userId, CreateModelRequest createModelRequest) {
+    public CreateModelResponse createModel(Long userId, CreateModelRequest createModelRequest, MultipartFile modelFile, List<MultipartFile> modelImages) {
 
         User user = userRepository.findUserById(userId);
         Category category = Category.valueOf(createModelRequest.getCategoryName());
@@ -77,8 +78,8 @@ public class ModelServiceImpl implements ModelService {
 
         List<Tag> tags = tagService.createTags(createModelRequest.getTags());
         modelTagService.createModelTag(model.getId(), tags);
-        modelFileService.createModelFile(model.getId(),createModelRequest.getModelFile());
-        modelImageService.createModelImages(model.getId(), createModelRequest.getImages());
+        modelFileService.createModelFile(model.getId(),modelFile);
+        modelImageService.createModelImages(model.getId(), modelImages);
 
         CreateModelResponse createModelResponse = CreateModelResponse.builder()
                 .modelId(model.getId())
