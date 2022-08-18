@@ -14,6 +14,7 @@ import com.example.MakeAnything.domain.tag.service.TagService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -42,11 +43,14 @@ public class ModelController {
     @ResponseBody
     @PostMapping("")
     @ApiOperation(value = "모델 생성")
-    public ApiResponse<CreateModelResponse> createModel(@RequestBody CreateModelRequest createModelRequest) {
+    public ApiResponse<CreateModelResponse> createModel(@RequestPart(value = "modelFile") MultipartFile modelFile,
+                                                        @RequestPart(value = "modelImages") List<MultipartFile> modelImages,
+                                                        @RequestPart(value = "createModelRequest") CreateModelRequest createModelRequest) {
 
         Long userId = jwtService.getUserId();
 
-        CreateModelResponse createModelResponse = modelService.createModel(userId, createModelRequest);
+
+        CreateModelResponse createModelResponse = modelService.createModel(userId, createModelRequest, modelFile, modelImages);
 
         return ApiResponse.success(createModelResponse);
     }
