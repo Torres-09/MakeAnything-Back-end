@@ -83,9 +83,8 @@ public class ModelServiceImpl implements ModelService {
     @Override
     @Transactional(readOnly = true)
     public List<GetModelByCategoryResponse> getModelsByCategory(String category) {
-        List<Model> byCategory = modelRepository.findModelsByCategoryOrderByIdDesc(category);
-        return byCategory.stream()
-                .filter(model -> model.getDeletedAt() == null)
+        return modelRepository.findAll().stream()
+                .filter(model -> model.getDeletedAt()==null)
                 .map(model -> GetModelByCategoryResponse.of(model))
                 .sorted(Comparator.reverseOrder())
                 .collect(Collectors.toList());
