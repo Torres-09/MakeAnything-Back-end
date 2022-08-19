@@ -6,11 +6,12 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class GetModelByCategoryResponse {
+public class GetModelByCategoryResponse implements Comparable<GetModelByCategoryResponse>{
     private Long modelId;
     private String modelName;
     private Long price;
@@ -21,5 +22,10 @@ public class GetModelByCategoryResponse {
     public static GetModelByCategoryResponse of(Model model) {
         return new GetModelByCategoryResponse(model.getId(), model.getModelName(), model.getPrice()
                 , model.getDownloadCount(), model.getUser().getNickName(), model.getModelImages().get(0));
+    }
+
+    @Override
+    public int compareTo(@NotNull GetModelByCategoryResponse o) {
+        return this.getModelId().compareTo(o.getModelId());
     }
 }

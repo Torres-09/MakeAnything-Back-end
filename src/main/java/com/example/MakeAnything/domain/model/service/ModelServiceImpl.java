@@ -5,17 +5,22 @@ import com.example.MakeAnything.domain.model.model.Model;
 import com.example.MakeAnything.domain.model.repository.ModelRepository;
 import com.example.MakeAnything.domain.model.service.dto.*;
 import com.example.MakeAnything.domain.modelfile.service.ModelFileService;
+import com.example.MakeAnything.domain.modelimage.model.ModelImage;
 import com.example.MakeAnything.domain.modelimage.service.ModelImageService;
+import com.example.MakeAnything.domain.modeltag.model.ModelTag;
 import com.example.MakeAnything.domain.modeltag.service.ModelTagService;
 import com.example.MakeAnything.domain.tag.model.Tag;
 import com.example.MakeAnything.domain.tag.service.TagService;
 import com.example.MakeAnything.domain.user.model.User;
 import com.example.MakeAnything.domain.user.repository.UserRepository;
+import com.example.MakeAnything.utils.S3Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -36,6 +41,8 @@ public class ModelServiceImpl implements ModelService {
 
     private final TagService tagService;
 
+    private final S3Getter s3Getter;
+
 
     // 모델 조회
     @Override
@@ -43,7 +50,8 @@ public class ModelServiceImpl implements ModelService {
     public List<GetAllModelsResponse> getAllModels() {
         return modelRepository.findAll().stream()
                 .filter(model -> model.getDeletedAt() == null)
-                .map(model -> GetAllModelsResponse.of(model))
+                .map(model -> GetAllModelsResponse.of(model, model.getModelImages().get(0).getImageFullPath()))
+                .sorted(Comparator.reverseOrder())
                 .collect(Collectors.toList());
     }
 
@@ -52,24 +60,41 @@ public class ModelServiceImpl implements ModelService {
     @Transactional(readOnly = true)
     public GetModelResponse getModel(Long modelId) {
         Model model = modelRepository.findModelById(modelId);
-        GetModelResponse getModelResponse = GetModelResponse.of(model);
+        List<ModelImage> modelImageList = model.getModelImages();
+        List<String> modelImageUrls = new ArrayList<>();
+        List<ModelTag> modelTagList = model.getModelTags();
+        List<String> tagNames = new ArrayList<>();
+
+        for (ModelTag modelTag : modelTagList) {
+            String tagName = modelTag.getTag().getTagName();
+            tagNames.add(tagName);
+        }
+
+        for (ModelImage modelImage : modelImageList) {
+            String imageFullPath = modelImage.getImageFullPath();
+            modelImageUrls.add(imageFullPath);
+        }
+
+        GetModelResponse getModelResponse = GetModelResponse.of(model, modelImageUrls, tagNames);
         return getModelResponse;
     }
 
     // 카테고리 이름으로 모델 조회
     @Override
     @Transactional(readOnly = true)
-    public List<GetModelByCategoryResponse> getModelsByCategory(Long categoryId) {
-        return modelRepository.findModelsByCategory(categoryId).stream()
+    public List<GetModelByCategoryResponse> getModelsByCategory(String category) {
+        List<Model> byCategory = modelRepository.findModelsByCategoryOrderByIdDesc(category);
+        return byCategory.stream()
+                .filter(model -> model.getDeletedAt() == null)
                 .map(model -> GetModelByCategoryResponse.of(model))
+                .sorted(Comparator.reverseOrder())
                 .collect(Collectors.toList());
     }
 
-    // 모델 생성
+    // 모델 생성 ( 완 )
     @Override
     @Transactional
     public CreateModelResponse createModel(Long userId, CreateModelRequest createModelRequest, MultipartFile modelFile, List<MultipartFile> modelImages) {
-
         User user = userRepository.findUserById(userId);
         Category category = Category.valueOf(createModelRequest.getCategoryName());
 
@@ -78,7 +103,7 @@ public class ModelServiceImpl implements ModelService {
 
         List<Tag> tags = tagService.createTags(createModelRequest.getTags());
         modelTagService.createModelTag(model.getId(), tags);
-        modelFileService.createModelFile(model.getId(),modelFile);
+        modelFileService.createModelFile(model.getId(), modelFile);
         modelImageService.createModelImages(model.getId(), modelImages);
 
         CreateModelResponse createModelResponse = CreateModelResponse.builder()
@@ -140,7 +165,9 @@ public class ModelServiceImpl implements ModelService {
     @Override
     public List<GetModelByNameResponse> getModelByName(GetModelByNameRequest getModelByNameRequest) {
         return modelRepository.findModelsByModelName(getModelByNameRequest.getModelName()).stream()
-                .map(model -> GetModelByNameResponse.of(model))
+                .filter(model -> model.getDeletedAt() == null)
+                .map(model -> GetModelByNameResponse.of(model, model.getModelImages().get(0).getImageFullPath()))
+                .sorted(Comparator.reverseOrder())
                 .collect(Collectors.toList());
     }
 
@@ -148,8 +175,10 @@ public class ModelServiceImpl implements ModelService {
     @Transactional(readOnly = true)
     @Override
     public List<GetTopModelResponse> getTopModel() {
-        return modelRepository.findAllByOrderByDownloadCountDesc().stream()
-                .map(model -> GetTopModelResponse.of(model))
+        return modelRepository.findAll().stream()
+                .filter(model -> model.getDeletedAt() == null)
+                .map(model -> GetTopModelResponse.of(model, model.getModelImages().get(0).getImageFullPath()))
+                .sorted(Comparator.reverseOrder())
                 .collect(Collectors.toList());
     }
 }

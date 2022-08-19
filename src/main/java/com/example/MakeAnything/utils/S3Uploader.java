@@ -55,11 +55,9 @@ public class S3Uploader {
     }
 
     private Optional<File> convert(MultipartFile file,String contentType) throws IOException {
-
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
-        String current_date = simpleDateFormat.format(new Date());
-
-        File convertFile = new File(file.getName() + current_date+ contentType);
+        long millis = System.currentTimeMillis();
+        String current_date = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(millis);
+        File convertFile = new File(file.getName() + current_date + contentType);
         log.info("convertFile = " + convertFile);
         if(convertFile.createNewFile()) {
             try (FileOutputStream fos = new FileOutputStream(convertFile)) {

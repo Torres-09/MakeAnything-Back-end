@@ -13,7 +13,7 @@ public interface ModelService {
     List<GetAllModelsResponse> getAllModels();
 
     // 모델 카테고리 조회
-    List<GetModelByCategoryResponse> getModelsByCategory(Long categoryId);
+    List<GetModelByCategoryResponse> getModelsByCategory(String category);
 
     // 모델 상세 조회
     GetModelResponse getModel(Long modelId);
@@ -29,9 +29,6 @@ public interface ModelService {
 
     // 이름으로 모델 검색
     List<GetModelByNameResponse> getModelByName(GetModelByNameRequest getModelByNameRequest);
-
-    // 태그로 모델 검색
-//    List<GetModelByTagResponse> getModelByTag(GetModelByTagRequest getModelByTagRequest);
 
     // 상위 모델 조회
     List<GetTopModelResponse> getTopModel();
