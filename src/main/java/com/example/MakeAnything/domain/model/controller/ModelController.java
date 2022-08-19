@@ -50,7 +50,7 @@ public class ModelController {
         return ApiResponse.success(createModelResponse);
     }
 
-    // 모델을 카테고리로 조회
+    // 모델을 카테고리로 조회 ( 미완 )
     @GetMapping("/category/{category}")
     @ApiOperation(value = "카테고리 조회")
     public ApiResponse<List<GetModelByCategoryResponse>> getModelByCategory(@PathVariable ("category") String category) {
@@ -72,7 +72,7 @@ public class ModelController {
         return ApiResponse.success(modelService.getTopModel());
     }
 
-    // 모델 상세 정보 조회
+    // 모델 상세 정보 조회 ( 완료 )
     @GetMapping("/model/{modelId}")
     @ApiOperation(value = "모델 상세 정보 조회")
     public ApiResponse<GetModelResponse> getModel(@PathVariable ("modelId") Long modelId){
