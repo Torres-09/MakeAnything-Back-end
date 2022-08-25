@@ -167,7 +167,7 @@ public class ModelServiceImpl implements ModelService {
     @Transactional(readOnly = true)
     @Override
     public List<GetModelByNameResponse> getModelByName(GetModelByNameRequest getModelByNameRequest) {
-        return modelRepository.findModelsByModelName(getModelByNameRequest.getModelName()).stream()
+        return modelRepository.findModelsByModelNameIsContaining(getModelByNameRequest.getModelName()).stream()
                 .filter(model -> model.getDeletedAt() == null)
                 .map(model -> GetModelByNameResponse.of(model, model.getModelImages().get(0).getImageFullPath()))
                 .sorted(Comparator.reverseOrder())
