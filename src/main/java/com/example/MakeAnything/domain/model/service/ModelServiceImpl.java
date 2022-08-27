@@ -17,6 +17,7 @@ import com.example.MakeAnything.domain.user.model.User;
 import com.example.MakeAnything.domain.user.repository.UserRepository;
 import com.example.MakeAnything.utils.S3Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -51,8 +52,8 @@ public class ModelServiceImpl implements ModelService {
     // 모델 조회
     @Override
     @Transactional(readOnly = true)
-    public List<GetAllModelsResponse> getAllModels() {
-        return modelRepository.findAll().stream()
+    public List<GetAllModelsResponse> getAllModels(Pageable pageable) {
+        return modelRepository.findAll(pageable).stream()
                 .filter(model -> model.getDeletedAt() == null)
                 .map(model -> GetAllModelsResponse.of(model, model.getModelImages().get(0).getImageFullPath()))
                 .sorted(Comparator.reverseOrder())

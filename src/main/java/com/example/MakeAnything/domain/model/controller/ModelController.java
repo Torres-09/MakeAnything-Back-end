@@ -14,6 +14,8 @@ import com.example.MakeAnything.domain.tag.service.TagService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -31,8 +33,8 @@ public class ModelController {
     // 전체 모델 조회 ( 완 )
     @GetMapping("")
     @ApiOperation(value = "모델 전체 조회")
-    public ApiResponse<List<GetAllModelsResponse>> getAllModels(){
-        return ApiResponse.success(modelService.getAllModels());
+    public ApiResponse<List<GetAllModelsResponse>> getAllModels(@PageableDefault(size = 5) Pageable pageable){
+        return ApiResponse.success(modelService.getAllModels(pageable));
     }
 
     // 모델 ( 게시물 ) 생성 ( 완 )

@@ -2,6 +2,7 @@ package com.example.MakeAnything.domain.model.service;
 
 import com.example.MakeAnything.domain.model.model.Model;
 import com.example.MakeAnything.domain.model.service.dto.*;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -10,7 +11,7 @@ import java.util.List;
 public interface ModelService {
 
     // 모델 전체 조회
-    List<GetAllModelsResponse> getAllModels();
+    List<GetAllModelsResponse> getAllModels(Pageable pageable);
 
     // 모델 카테고리 조회
     List<GetModelByCategoryResponse> getModelsByCategory(String category);
