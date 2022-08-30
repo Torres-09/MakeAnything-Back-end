@@ -87,8 +87,8 @@ public class ModelServiceImpl implements ModelService {
     // 카테고리 이름으로 모델 조회
     @Override
     @Transactional(readOnly = true)
-    public List<GetModelByCategoryResponse> getModelsByCategory(String category) {
-        return modelRepository.findAll().stream()
+    public List<GetModelByCategoryResponse> getModelsByCategory(Pageable pageable, String category) {
+        return modelRepository.findAll(pageable).stream()
                 .filter(model -> model.getDeletedAt() == null)
                 .map(model -> GetModelByCategoryResponse.of(model))
                 .sorted(Comparator.reverseOrder())
@@ -167,8 +167,8 @@ public class ModelServiceImpl implements ModelService {
     // 이름으로 모델 검색
     @Transactional(readOnly = true)
     @Override
-    public List<GetModelByNameResponse> getModelByName(GetModelByNameRequest getModelByNameRequest) {
-        return modelRepository.findModelsByModelNameIsContaining(getModelByNameRequest.getModelName()).stream()
+    public List<GetModelByNameResponse> getModelByName(Pageable pageable, GetModelByNameRequest getModelByNameRequest) {
+        return modelRepository.findModelsByModelNameIsContaining(pageable, getModelByNameRequest.getModelName()).stream()
                 .filter(model -> model.getDeletedAt() == null)
                 .map(model -> GetModelByNameResponse.of(model, model.getModelImages().get(0).getImageFullPath()))
                 .sorted(Comparator.reverseOrder())
@@ -178,8 +178,8 @@ public class ModelServiceImpl implements ModelService {
     // 상위 모델 조회
     @Transactional(readOnly = true)
     @Override
-    public List<GetTopModelResponse> getTopModel() {
-        return modelRepository.findAll().stream()
+    public List<GetTopModelResponse> getTopModel(Pageable pageable) {
+        return modelRepository.findAll(pageable).stream()
                 .filter(model -> model.getDeletedAt() == null)
                 .map(model -> GetTopModelResponse.of(model, model.getModelImages().get(0).getImageFullPath()))
                 .sorted(Comparator.reverseOrder())
