@@ -88,8 +88,9 @@ public class ModelServiceImpl implements ModelService {
     @Override
     @Transactional(readOnly = true)
     public List<GetModelByCategoryResponse> getModelsByCategory(Pageable pageable, String category) {
-        return modelRepository.findAll(pageable).stream()
-                .filter(model -> model.getDeletedAt() == null)
+        Category categoryByEnum = Category.valueOf(category);
+        return modelRepository.findByCategory(categoryByEnum)
+                .stream()
                 .map(model -> GetModelByCategoryResponse.of(model))
                 .sorted(Comparator.reverseOrder())
                 .collect(Collectors.toList());
