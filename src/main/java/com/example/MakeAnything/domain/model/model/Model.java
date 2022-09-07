@@ -26,7 +26,7 @@ public class Model{
     @JoinColumn(name = "userId")
     private User user;
 
-    @Convert(converter = CategoryConverter.class)
+    @Enumerated(EnumType.STRING)
     private Category category;
 
     private String modelName;
