@@ -1,12 +1,11 @@
 package com.example.MakeAnything.domain.user.model;
 
+import com.example.MakeAnything.domain.auth.model.AuthProvider;
+import com.example.MakeAnything.domain.auth.model.UserRole;
 import com.example.MakeAnything.domain.auth.service.dto.SignUpLocalRequest;
 import com.example.MakeAnything.domain.auth.service.dto.SignUpSocialRequest;
 import com.example.MakeAnything.domain.common.BaseTimeEntity;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -14,12 +13,12 @@ import javax.persistence.*;
 @Table(name = "tb_user")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder
 public class User extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private String socialId;
 
     private String userName;
 
@@ -33,16 +32,13 @@ public class User extends BaseTimeEntity {
 
     private String address;
 
-    @Builder(access = AccessLevel.PRIVATE)
-    public User(String socialId, String userName, String email, String nickName, String password, String phoneNumber, String address) {
-        this.socialId = socialId;
-        this.userName = userName;
-        this.email = email;
-        this.nickName = nickName;
-        this.password = password;
-        this.phoneNumber = phoneNumber;
-        this.address = address;
-    }
+    private String refreshToken;
+
+    @Enumerated(EnumType.STRING)
+    private UserRole role;
+
+    @Enumerated(EnumType.STRING)
+    private AuthProvider authProvider;
 
     public static User newLocalInstance(SignUpLocalRequest request, String encryptPassword) {
         return User.builder()
@@ -52,17 +48,20 @@ public class User extends BaseTimeEntity {
                 .password(encryptPassword)
                 .phoneNumber(request.getPhoneNumber())
                 .address(request.getAddress())
+                .role(UserRole.USER)
+                .authProvider(AuthProvider.LOCAL)
                 .build();
     }
 
     public static User newSocialInstance(SignUpSocialRequest request, String socialId, String email) {
         return User.builder()
                 .userName(request.getUserName())
-                .socialId(socialId)
                 .email(email)
                 .nickName(request.getNickName())
                 .phoneNumber(request.getPhoneNumber())
                 .address(request.getAddress())
+                .role(UserRole.USER)
+                .authProvider(AuthProvider.LOCAL)
                 .build();
     }
 
