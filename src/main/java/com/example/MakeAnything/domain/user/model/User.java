@@ -12,8 +12,8 @@ import javax.persistence.*;
 @Entity
 @Table(name = "tb_user")
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class User extends BaseTimeEntity {
     @Id

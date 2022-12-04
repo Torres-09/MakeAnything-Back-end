@@ -39,6 +39,7 @@ public class CustomOauth2UserService extends DefaultOAuth2UserService {
         }
 
         Optional<User> userOptional = userRepository.findByEmail(userInfo.getEmail());
+
         User user;
 
         if (userOptional.isPresent()) {

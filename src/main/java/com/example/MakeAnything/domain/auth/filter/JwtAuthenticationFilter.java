@@ -25,8 +25,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         String token = parseBearerToken(request);
 
-        System.out.println("request = " + request.getRequestURI());
-
         // Validation Access Token
         if (StringUtils.hasText(token) && tokenProvider.validateToken(token)) {
             Authentication authentication = tokenProvider.getAuthentication(token);
