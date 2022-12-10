@@ -1,4 +1,4 @@
-package com.example.MakeAnything.domain.auth.service;
+package com.example.MakeAnything.domain.auth.service.noSecurity;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

@@ -1,13 +1,20 @@
 package com.example.MakeAnything.domain.auth.controller;
 
-import com.example.MakeAnything.domain.auth.service.*;
+import com.example.MakeAnything.domain.auth.model.CustomUserDetails;
 import com.example.MakeAnything.domain.auth.service.dto.*;
+import com.example.MakeAnything.domain.auth.service.noSecurity.*;
 import com.example.MakeAnything.domain.common.ApiResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
+
+import java.net.http.HttpHeaders;
 
 @RestController
 @RequiredArgsConstructor
@@ -73,6 +80,12 @@ public class AuthController {
     public ApiResponse<UpdatePWResponse> updatePWByEmail(@RequestBody UpdatePWRequest request) {
 
         return ApiResponse.success(localAuthService.updatePWByEmail(request));
+    }
+
+    @GetMapping("auth/me")
+    public ApiResponse<Object> log(@AuthenticationPrincipal CustomUserDetails user) {
+        
+        return ApiResponse.success(user);
     }
 
 }

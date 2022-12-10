@@ -1,6 +1,6 @@
 package com.example.MakeAnything.domain.wishlist.controller;
 
-import com.example.MakeAnything.domain.auth.service.JwtService;
+import com.example.MakeAnything.domain.auth.service.noSecurity.JwtService;
 import com.example.MakeAnything.domain.common.ApiResponse;
 import com.example.MakeAnything.domain.wishlist.service.WishlistService;
 import lombok.RequiredArgsConstructor;
