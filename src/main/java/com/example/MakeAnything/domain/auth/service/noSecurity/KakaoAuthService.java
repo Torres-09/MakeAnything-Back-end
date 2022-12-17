@@ -1,4 +1,4 @@
-package com.example.MakeAnything.domain.auth.service;
+package com.example.MakeAnything.domain.auth.service.noSecurity;
 
 import com.example.MakeAnything.domain.auth.model.RefreshToken;
 import com.example.MakeAnything.domain.auth.repository.RefreshTokenRepository;
@@ -30,7 +30,7 @@ public class KakaoAuthService implements SocialAuthService {
     public LoginResponse login(LoginSocialRequest request) {
         KakaoUserResponse userInfo = kakaoApiClient.getUserInfo(request.getToken());
 
-        User user = userRepository.findBySocialId(userInfo.getId())
+        User user = userRepository.findByEmail(userInfo.getId())
                 .orElseThrow(() -> new BaseException(ErrorCode.NOTFOUND_USER));
 
         String accessToken = jwtService.createJwt(user.getId());
@@ -46,7 +46,7 @@ public class KakaoAuthService implements SocialAuthService {
 
         KakaoUserResponse userInfo = kakaoApiClient.getUserInfo(request.getToken());
 
-        if (userRepository.existsBySocialId(userInfo.getId())) {
+        if (userRepository.existsByEmail(userInfo.getId())) {
             throw new BaseException(ErrorCode.CONFLICT_USER);
         }
 
