@@ -1,12 +1,3 @@
-## 👩‍👩‍👧‍👧 팀원 소개
-- [“PM & Server” **환**](https://political-donut-900.notion.site/Hwan-c4ba465599a0487d8665e761a508c50e)  
-- [“Designer” **준**](https://political-donut-900.notion.site/June-c4ecca5b0e7c42ccbc3cbf674ec00544)
-- [“Web” **포디**](https://political-donut-900.notion.site/Fody-d6ec571fa31a46bda31ac4364f38d5d5)
-- [“Web” **크리스**](https://political-donut-900.notion.site/Chris-2398d7d761a74bdeaa47517a7baf3efa)
-- [“Web” **클레어**](https://political-donut-900.notion.site/Claire-1c0c1e857595426eadc5cdb30c26ca05)
-- [“Server” **바란**](https://political-donut-900.notion.site/Baran-f42fc35fa70145d59dad4f3c0a209e62)  
-<br><br>   
-
 ## 💡 기획 배경
 > 💡 인터넷이나 오프라인에서 제품을 구매할 때, 마음에 드는 디자인이 없는 경우가 있었나요?  
 
